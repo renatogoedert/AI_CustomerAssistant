@@ -1,0 +1,8 @@
+strategy,relative_threshold_pct,retrieval_score_pct,faithfulness_yes,faithfulness_no,faithfulness_partial,faithfulness_unknown,avg_retrieval_time_s,avg_compression_time_s,avg_generation_time_s,avg_total_latency_s,avg_response_words
+Before Compression,0,82,6,2,1,1,2.444,0.0,67.818,70.262,325
+Compress 45%,45,78,8,1,1,0,1.871,0.0,45.528,47.399,236
+Compress 50%,50,78,6,2,2,0,1.873,0.0,42.403,44.275,231
+Compress 55%,55,78,5,2,3,0,1.929,0.0,46.07,47.999,233
+Compress 60%,60,76,7,2,1,0,2.065,0.0,42.55,44.615,217
+Compress 65%,65,76,6,2,2,0,1.865,0.0,40.99,42.855,210
+Compress 50% + semantic,50,78,9,1,0,0,1.862,0.455,42.876,44.738,225

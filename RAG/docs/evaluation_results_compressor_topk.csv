@@ -1,0 +1,9 @@
+top_k,total_queries,avg_retrieval_score_pct,faithfulness_yes,faithfulness_no,faithfulness_partial,faithfulness_unknown,avg_helpfulness,avg_clarity,avg_professionalism,avg_completeness,avg_retrieval_time_s,avg_compression_time_s,avg_generation_time_s,avg_total_latency_s,avg_response_words
+3,10,88,8,0,2,0,4.4,4.0,4.8,4.4,1.859,0.720,43.346,45.925,224
+4,10,88,8,1,1,0,4.5,4.2,5.0,4.6,2.621,0.747,57.646,61.014,236
+5,10,88,9,1,0,0,4.7,4.4,5.0,4.6,1.864,0.715,50.923,53.502,262
+6,10,88,10,0,0,0,5.0,4.5,4.9,5.0,1.867,0.684,46.512,49.063,257
+7,10,88,10,0,0,0,4.9,4.4,4.8,5.0,1.867,0.719,51.135,53.721,286
+8,10,88,10,0,0,0,5.0,4.6,4.9,4.9,2.455,0.756,64.060,67.270,282
+9,10,88,10,0,0,0,4.9,4.6,5.0,5.0,1.896,0.701,52.925,55.521,290
+10,10,88,8,0,2,0,5.0,4.6,4.8,5.0,2.065,0.750,56.104,58.918,313
