@@ -4,7 +4,7 @@ from langchain_core.tools import tool
 
 # Prompt injection patterns
 PROMPT_INJECTION_PATTERNS = [
-    r"ignore\s+(previous|all|prior)\s+instructions",
+    r"ignore.{0,10}(previous|instructions|rules|guidelines|above|told)",
     r"you\s+are\s+now",
     r"act\s+as\s+(a|an)",
     r"forget\s+(everything|all|your)",
@@ -37,52 +37,53 @@ MALICIOUS_PATTERNS = [
 ]
 
 
-def _check_patterns(text: str, patterns: list[str]) -> list[str]:
-    """Return list of matched pattern descriptions."""
+def _normalize(text: str) -> str:
+
+    """
+    Normalise text to catch character-spacing bypass attempts.
+    e.g. "i g n o r e" → "ignore", "i.g.n.o.r.e" → "ignore"
+    Only collapses spaces/separators between single characters.
+    """
+    
+    text = re.sub(r'(?<=[a-z]) (?=[a-z])', '', text)
+    text = re.sub(r'(?<=[a-z])[._\-*](?=[a-z])', '', text)
+    return text
+
+
+def _check_patterns(text: str, patterns: list[str]) -> bool:
+
+    """Check both original and normalised text against patterns."""
+
     text_lower = text.lower()
-    matched = []
+    text_normalized = _normalize(text.lower())
     for pattern in patterns:
-        if re.search(pattern, text_lower):
-            matched.append(pattern)
-    return matched
+        if re.search(pattern, text_lower) or re.search(pattern, text_normalized):
+            return True
+    return False
 
 
 @tool
-def safety_check(query: str) -> str:
-    """
-    Validates user input for prompt injection, SQL injection, and other
-    malicious content before processing by any agent.
+def is_safe(query: str) -> dict:
 
-    Returns "SAFE: <query>" if input is clean,
-    or "UNSAFE: <reason>" if a threat is detected.
     """
+    Validates user input for prompt injection, SQL injection, and malicious content.
+    Returns {"safe": bool, "query": str, "reason": str}.
+    Agents should check "safe" before using "query".
+    """
+
     if not query or not query.strip():
-        return "UNSAFE: Empty input"
+        return {"safe": False, "query": "", "reason": "Empty input"}
 
     if len(query) > 2000:
-        return "UNSAFE: Input exceeds maximum length of 2000 characters"
+        return {"safe": False, "query": "", "reason": "Input exceeds maximum length of 2000 characters"}
 
-    injection_matches = _check_patterns(query, PROMPT_INJECTION_PATTERNS)
-    if injection_matches:
-        return "UNSAFE: Prompt injection attempt detected"
+    if _check_patterns(query, PROMPT_INJECTION_PATTERNS):
+        return {"safe": False, "query": "", "reason": "Prompt injection attempt detected"}
 
-    sql_matches = _check_patterns(query, SQL_INJECTION_PATTERNS)
-    if sql_matches:
-        return "UNSAFE: SQL injection attempt detected"
+    if _check_patterns(query, SQL_INJECTION_PATTERNS):
+        return {"safe": False, "query": "", "reason": "SQL injection attempt detected"}
 
-    malicious_matches = _check_patterns(query, MALICIOUS_PATTERNS)
-    if malicious_matches:
-        return "UNSAFE: Malicious content detected"
+    if _check_patterns(query, MALICIOUS_PATTERNS):
+        return {"safe": False, "query": "", "reason": "Malicious content detected"}
 
-    return f"SAFE: {query.strip()}"
-
-
-def is_safe(query: str) -> tuple[bool, str]:
-    """
-    Helper function for agents to check input safety directly.
-    Returns (is_safe: bool, message: str).
-    """
-    result = safety_check.invoke(query)
-    if result.startswith("SAFE:"):
-        return True, result[6:].strip()
-    return False, result[8:].strip()
+    return {"safe": True, "query": query.strip(), "reason": ""}
