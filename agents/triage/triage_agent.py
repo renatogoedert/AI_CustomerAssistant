@@ -55,7 +55,7 @@ class TriageAgent:
     """
 
     def __init__(self):
-        self.llm = get_llm(temperature=0)
+        self.llm = get_llm(provider='openai', model_name='gpt-4.1-mini', temperature=0)
         self.tools = [is_safe, classify_query]
 
         self.executor = create_agent(

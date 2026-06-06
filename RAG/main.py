@@ -67,6 +67,7 @@ def build_vectorstore(documents: list[dict], embeddings, persist_dir="./chroma_d
         metadatas=metadatas,
         embedding=embeddings,
         collection_name="omnia_retail",
+        persist_directory="./chroma_db",
     )
 
 

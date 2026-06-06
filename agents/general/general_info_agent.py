@@ -1,6 +1,7 @@
 from langchain.agents import create_agent
 from langchain_core.tools import tool
 
+from rag.main import load_dataset, build_vectorstore
 from agents.tools.safety import is_safe
 from config.llm_config import get_llm, get_embeddings
 from rag.retrieval.hybrid_retriever import HybridRetriever
@@ -55,7 +56,7 @@ class GeneralAgent:
     """
 
     def __init__(self, documents: list[dict], vectorstore):
-        self.llm = get_llm(temperature=0.3)
+        self.llm = get_llm(provider='openai', model_name='gpt-4.1-mini', temperature=0.3)
         self.retriever = HybridRetriever(documents=documents, vectorstore=vectorstore)
         self.compressor = ContextCompressor(embeddings=get_embeddings())
         self.tools = [is_safe]
