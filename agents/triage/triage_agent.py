@@ -10,8 +10,8 @@ from config.llm_config import get_llm
 ROUTING = {
     "technical":  "TechnicalAgent",
     "warranty":   "WarrantyAgent",
-    "returns":    "GeneralAgent",
-    "delivery":   "GeneralAgent",
+    "returns":    "ActionAgent",
+    "delivery":   "ActionAgent",
     "bulk":       "GeneralAgent",
     "general":    "GeneralAgent",
     "escalation": "EscalationAgent",

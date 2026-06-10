@@ -127,9 +127,6 @@ def setup(username: str, debug: bool = False):
 
     workflow = build_workflow(triage, general, technical, action)
 
-    # Set debug mode on safety module
-    safety_module.DEBUG = debug
-
     debug and print("✓ Agents and workflow ready\n")
     return workflow
 

@@ -67,6 +67,21 @@ def triage_node(state: OmniaState, triage_agent: TriageAgent) -> OmniaState:
     result = triage_agent.process(state["query"] + handoff_context)
     route  = result.get("route_to", "GeneralAgent")
 
+    # Loop detection — if triage routes back to same agent after handoff
+    if needs_handoff and route == current_agent:
+        if state.get("debug"):
+            print(f"  [Triage] Loop detected — escalating to human support")
+        return {
+            "route_to":      "EscalationAgent",
+            "current_agent": "EscalationAgent",
+            "category":      "escalation",
+            "urgency":       "high",
+            "needs_handoff": False,
+            "handoff_reason": "",
+            "response":      "I'm having trouble processing your request. Please contact our support team directly at support@omniaretail.ie or call 01-XXX-XXXX for immediate assistance.",
+            "processing_log": log,
+        }
+
     log.append(f"Triage: category={result.get('category')} urgency={result.get('urgency')} "
                f"route={route} method={result.get('method', 'N/A')}"
                + (f" [handoff from {current_agent}]" if needs_handoff else ""))
@@ -184,7 +199,7 @@ ROUTING_MAP = {
     "TechnicalAgent":  "technical",
     "ActionAgent":     "action",
     "WarrantyAgent":   "action",
-    "EscalationAgent": "action",
+    "EscalationAgent": "escalation",
     "GeneralAgent":    "general",
 }
 
@@ -214,10 +229,11 @@ def build_workflow(
     workflow.add_node("general",   lambda s: general_node(s, general_agent))
     workflow.add_node("technical", lambda s: technical_node(s, technical_agent))
     workflow.add_node("action",    lambda s: action_node(s, action_agent))
+    workflow.add_node("escalation", lambda s: s)
 
     workflow.set_entry_point("triage")
 
-    # Triage → agent
+    # Triage Agent Edges
     workflow.add_conditional_edges(
         "triage",
         route_after_triage,
@@ -225,10 +241,11 @@ def build_workflow(
             "general":   "general",
             "technical": "technical",
             "action":    "action",
+            "escalation": "escalation",
         }
     )
 
-    # General → triage (handoff) or END
+    # General Agent Edges
     workflow.add_conditional_edges(
         "general",
         route_after_agent,
@@ -238,7 +255,7 @@ def build_workflow(
         }
     )
 
-    # Technical → triage (handoff) or END
+    # Technical Agent Edges
     workflow.add_conditional_edges(
         "technical",
         route_after_agent,
@@ -248,7 +265,7 @@ def build_workflow(
         }
     )
 
-    # Action → triage (handoff) or END
+    # Action Agent Edges
     workflow.add_conditional_edges(
         "action",
         route_after_agent,
@@ -258,4 +275,7 @@ def build_workflow(
         }
     )
 
+    # Escalation Agent Edges
+    workflow.add_edge("escalation", END)
+    
     return workflow.compile()
