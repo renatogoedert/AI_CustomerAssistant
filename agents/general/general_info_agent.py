@@ -123,7 +123,7 @@ class GeneralAgent:
         # Compress context
         compressed = self.compressor.compress(query, retrieved)
 
-        # Build context and generate response
+        # Generate response
         context = "\n\n".join([doc.page_content for doc in compressed])
         prompt = _build_rag_prompt(query, context, history)
 

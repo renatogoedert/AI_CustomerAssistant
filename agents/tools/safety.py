@@ -61,7 +61,7 @@ def _check_patterns(text: str, patterns: list[str]) -> bool:
             return True
     return False
 
-
+# Based on Code for Lab 9
 @tool
 def is_safe(query: str) -> dict:
 

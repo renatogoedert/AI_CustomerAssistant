@@ -1,69 +1,69 @@
-# Based on FastMCP documentation — https://gofastmcp.com/getting-started/welcome
-# Based on Code for Class 10 (week10_multiagent.py) — MultiAgentCoordinator pattern
-
-"""
-Action Agent for Omnia Retail Ltd.
-Executes backend operations via the MCP server:
-  - Order status checking
-  - Refund processing
-  - Inventory checking
-
-Requires the MCP server to be running:
-    python mock_data/mcp_server.py
-"""
 import asyncio
 import json
 
+from fastmcp import Client
 from langchain.agents import create_agent
 from langchain_core.tools import tool
 
 from agents.tools.safety import is_safe
+from agents.tools.handoff import handoff, check_for_handoff
 from config.llm_config import get_llm
 
 MCP_SERVER_URL = "http://localhost:8000/mcp"
 
-SYSTEM_PROMPT = """You are a customer support action agent for Omnia Retail Ltd, an Irish electronics retailer.
+SYSTEM_PROMPT = """
+    You are a customer support action agent for Omnia Retail Ltd, an Irish electronics retailer.
 
-You can perform the following actions on behalf of customers:
-- Check the status of an order
-- Process a refund for a delivered order
-- Check product inventory and availability
-
-Important rules:
-- Always verify the customer's username matches the order before taking any action
-- Only process refunds for delivered orders
-- If an action fails, explain clearly why and what the customer can do instead
-- For refunds, always confirm the reason before processing
-- If the MCP server is unavailable, inform the customer and suggest contacting support@omniaretail.ie
-
-Examples:
-
-Customer: "What is the status of my order ORD-2024-1891?"
-Action: Call get_order_status with the order ID and username
-
-Customer: "I want a refund for my damaged mouse from order ORD-2024-3012"
-Action: Call submit_refund with order ID, username and reason "item arrived damaged"
-
-Customer: "Is the Samsung NVMe SSD in stock?"
-Action: Call get_inventory with "Samsung NVMe"
+    You can perform the following actions on behalf of customers:
+    - Check the status of an order
+    - Process a refund for a delivered order
+    - Check product inventory and availability
+    
+    Important rules:
+    - Always verify the customer's username matches the order before taking any action
+    - Only process refunds for delivered orders
+    - If an action fails, explain clearly why and what the customer can do instead
+    - If the MCP server is unavailable, inform the customer and suggest contacting support@omniaretail.ie
+    - If the customer asks a general information question (return policy, warranty info, delivery times) → use the handoff tool
+    - If the customer has a technical issue → use the handoff tool
+    
+    Examples:
+    
+    Customer: "What is the status of my order ORD-2024-1891?"
+    Action: Call get_order_status with the order ID and username
+    
+    Customer: "I want a refund for my damaged mouse from order ORD-2024-3012"
+    Action: Call submit_refund with order ID, username and reason
+    
+    Customer: "Is the Samsung NVMe SSD in stock?"
+    Action: Call get_inventory with product name
+    
+    Customer: "What is your return policy?"
+    Action: handoff(reason="Customer asking about return policy — information query")
+    
+    Customer: "My laptop screen is flickering"
+    Action: handoff(reason="Customer has a technical issue — screen flickering")
 """
 
-
+# Based on FastMCP documentation (https://gofastmcp.com/getting-started/welcome)
 def _build_mcp_tools(username: str):
+
     """
     Build LangChain tools that call the MCP server.
     Username is bound at creation time so agents always use the logged-in user.
     """
-    from fastmcp import Client
 
+    # Based on Code for Lab 9
     @tool
     def get_order_status(order_id: str) -> str:
+
         """
         Check the status of a customer order.
         Args:
             order_id: The order ID in format ORD-YYYY-XXXX
         Returns order details including status, items, and dates.
         """
+
         async def _call():
             try:
                 async with Client(MCP_SERVER_URL) as client:
@@ -78,8 +78,10 @@ def _build_mcp_tools(username: str):
 
         return asyncio.run(_call())
 
+    # Based on Code for Lab 9
     @tool
     def submit_refund(order_id: str, reason: str) -> str:
+
         """
         Process a refund request for a delivered order.
         Args:
@@ -87,6 +89,7 @@ def _build_mcp_tools(username: str):
             reason: The reason for the refund request
         Returns refund confirmation with refund ID.
         """
+
         async def _call():
             try:
                 async with Client(MCP_SERVER_URL) as client:
@@ -100,14 +103,17 @@ def _build_mcp_tools(username: str):
 
         return asyncio.run(_call())
 
+    # Based on Code for Lab 9
     @tool
     def get_inventory(product_name: str) -> str:
+
         """
         Check inventory levels for a product.
         Args:
             product_name: Full or partial product name to search for
         Returns stock levels, price and availability.
         """
+
         async def _call():
             try:
                 async with Client(MCP_SERVER_URL) as client:
@@ -126,6 +132,7 @@ def _build_mcp_tools(username: str):
 
 
 class ActionAgent:
+
     """
     Action agent — executes backend operations for customer support.
     Connects to the Omnia Retail MCP server for order, refund and inventory operations.
@@ -145,10 +152,12 @@ class ActionAgent:
         )
 
     def process(self, query: str, history: str = "") -> dict:
+
         """
         Process an action request — order status, refund, or inventory check.
         Returns {"safe": bool, "response": str, "actions_taken": list}.
         """
+
         # Safety check
         safety_result = is_safe.invoke(query)
         if not safety_result["safe"]:
@@ -157,6 +166,16 @@ class ActionAgent:
                 "response": f"I cannot process this request: {safety_result['reason']}",
                 "actions_taken": [],
             }
+
+        # Run agent — checks if handoff is needed
+        exec_result = self.executor.invoke({
+            "messages": [("human", query)]
+        })
+ 
+        # Check for handoff tool call
+        handoff_result = check_for_handoff(exec_result)
+        if handoff_result:
+            return {**handoff_result, "safe": True, "retrieved_docs": [], "needs_handoff": True}
 
         # Build message with history context
         full_query = f"{query}\n\nNote: The logged-in customer username is '{self.username}'."

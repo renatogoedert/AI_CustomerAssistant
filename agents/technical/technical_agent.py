@@ -2,6 +2,7 @@ from langchain.agents import create_agent
 from langchain_community.tools import DuckDuckGoSearchRun
 
 from agents.tools.safety import is_safe
+from agents.tools.handoff import handoff, check_for_handoff
 from config.llm_config import get_llm, get_embeddings
 from rag.retrieval.hybrid_retriever import HybridRetriever
 from rag.context.context_compressor import ContextCompressor
@@ -22,26 +23,29 @@ SYSTEM_PROMPT = """
     2. If the knowledge base doesn't have enough information, use web search for current technical information
     3. Always provide clear step-by-step guidance
     4. If the issue requires a repair or replacement, explain the process but make clear actions are handled by our support team
-
+    
     Important boundaries:
     - You provide technical information and guidance only
-    - Do not process warranty claims or returns directly — explain the process instead
-    - If the issue cannot be resolved remotely, advise the customer to contact support at support@omniaretail.ie
-
+    - If the customer asks to process a refund, check order status or perform any non-technical action,
+    use the handoff tool with the reason
+    - If the customer is very upset or requests escalation, use the handoff tool
+    - If the issue cannot be resolved remotely, advise the customer to contact support@omniaretail.ie
+    
     Examples:
-
+    
     Customer: "My laptop keeps shutting down"
-    Action: Check knowledge base for thermal shutdown issues, provide troubleshooting steps.
-
-    Customer: "What is the difference between NVMe and SATA SSD?"
-    Action: Use knowledge base — this is product information we have documented.
-
+    Action: Check knowledge base, provide troubleshooting steps. No handoff needed.
+    
+    Customer: "Can you process a refund for my broken laptop?"
+    Action: handoff(reason="Customer wants to process a refund — non-technical action required")
+    
     Customer: "My AMD driver is causing BSODs on Windows 11"
     Action: Use web search for current AMD driver issues and fixes.
 """
 
 
 def _build_technical_prompt(query: str, rag_context: str, search_results: str, history: str = "") -> str:
+
     return f"""
         You are a technical support specialist at Omnia Retail Ltd.
         Use the information below to help the customer resolve their technical issue.
@@ -62,6 +66,7 @@ def _build_technical_prompt(query: str, rag_context: str, search_results: str, h
 
 
 class TechnicalAgent:
+
     """
     Technical support agent for product troubleshooting and technical queries.
     Uses RAG for internal documentation and DuckDuckGo for current technical information.
@@ -81,18 +86,22 @@ class TechnicalAgent:
         )
 
     def _search_web(self, query: str) -> str:
+
         """Run a web search and return results."""
+
         try:
             return self.search.invoke(query)
         except Exception as e:
             return f"Web search unavailable: {str(e)}"
 
     def process(self, query: str, history: str = "") -> dict:
+
         """
         Process a technical support query.
         Uses RAG first, falls back to web search if needed.
         Returns {"response": str, "retrieved_docs": list, "used_web_search": bool, "safe": bool}.
         """
+
         # Safety check
         safety_result = is_safe.invoke(query)
         if not safety_result["safe"]:
@@ -103,12 +112,22 @@ class TechnicalAgent:
                 "used_web_search": False,
             }
 
-        # Step 1 — Try RAG first
+        # Run agent — checks if handoff is needed
+        exec_result = self.executor.invoke({
+            "messages": [("human", query)]
+        })
+ 
+        # Check for handoff tool call
+        handoff_result = check_for_handoff(exec_result)
+        if handoff_result:
+            return {**handoff_result, "safe": True, "retrieved_docs": [], "needs_handoff": True}
+        
+        # RAG
         retrieved = self.retriever.retrieve(query)
         compressed = self.compressor.compress(query, retrieved) if retrieved else []
         rag_context = "\n\n".join([doc.page_content for doc in compressed]) if compressed else ""
 
-        # Step 2 — Use web search if RAG has low confidence
+        # Web Search
         used_web_search = False
         search_results = ""
         top_score = 0.0
@@ -118,7 +137,6 @@ class TechnicalAgent:
             search_results = self._search_web(query)
             used_web_search = True
         else:
-            # Check top retrieval score — if low, supplement with web search
             top_score = float(retrieved[0].metadata.get("retrieval_score", 0))
             if top_score < 1.8:
                 print(f"  [TechnicalAgent] Low RAG confidence ({top_score}) — supplementing with web search")
