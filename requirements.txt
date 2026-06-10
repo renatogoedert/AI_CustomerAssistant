@@ -22,3 +22,4 @@ rank-bm25==0.2.2
 pydantic==2.13.4
 duckduckgo-search==8.1.1
 ddgs==9.14.4
+fastmcp==3.4.2
