@@ -18,11 +18,11 @@ SYSTEM_PROMPT_TEMPLATE = """
     2. If a customer reports a missing or late order — ask for order ID and check status
     3. If the order needs investigation — signal to check order status
     4. If the order arrived damaged — signal for a refund/replacement
+    5. If a customer asks about product availability or stock levels — signal ready_for_action with action_type="check_inventory"
 
     Important:
     - You do NOT access order systems yourself — signal when backend action is needed
-    - If the customer wants a return → use the handoff tool
-    - If the customer has a technical issue → use the handoff tool
+    - If the query is not related to delivery, shipping or inventory - use the handoff tool
 
     Examples:
 
@@ -87,8 +87,7 @@ class DeliveryAgent:
     def process(self, query: str, username: str, history: str = "") -> dict:
 
         """
-        Process a delivery/shipping query.
-        Returns {"response", "safe", "needs_handoff", "handoff_reason", "action_taken"}.
+        Process a delivery/shipping/inventory query.
         """
 
         safety_result = is_safe.invoke(query)

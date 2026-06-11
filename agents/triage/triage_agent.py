@@ -9,9 +9,9 @@ from config.llm_config import get_llm
 
 ROUTING = {
     "technical":  "TechnicalAgent",
-    "warranty":   "ActionAgent",
-    "returns":    "ActionAgent",
-    "delivery":   "ActionAgent",
+    "warranty":   "WarrantyAgent",
+    "returns":    "ReturnsAgent",
+    "delivery":   "DeliveryAgent",
     "bulk":       "GeneralAgent",
     "general":    "GeneralAgent",
     "escalation": "EscalationAgent",
@@ -31,10 +31,10 @@ SYSTEM_PROMPT = """
     Result: {"safe": true, "category": "technical", "urgency": "medium", "route_to": "TechnicalAgent", "reason": "Technical issue detected"}
 
     Query: "I want to return my mouse, changed my mind"
-    Result: {"safe": true, "category": "returns", "urgency": "low", "route_to": "ActionAgent", "reason": "Return request"}
+    Result: {"safe": true, "category": "returns", "urgency": "low", "route_to": "ReturnsAgent", "reason": "Return request"}
 
     Query: "My order hasn't arrived and I need it urgently for tomorrow"
-    Result: {"safe": true, "category": "delivery", "urgency": "high", "route_to": "GeneralAgent", "reason": "Urgent delivery issue"}
+    Result: {"safe": true, "category": "delivery", "urgency": "high", "route_to": "DeliveryAgent", "reason": "Urgent delivery issue"}
 
     Query: "I need bulk pricing for 20 laptops for my office"
     Result: {"safe": true, "category": "bulk", "urgency": "low", "route_to": "GeneralAgent", "reason": "Bulk order enquiry"}

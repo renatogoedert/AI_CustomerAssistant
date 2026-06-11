@@ -144,6 +144,7 @@ def run_session(name: str, is_admin: bool, workflow):
 
     memory = load_memory(name)
     debug  = is_admin
+    memory["current_agent"] = ""
 
     history_str = "\n".join(
         f"{'Customer' if m['role'] == 'user' else 'Assistant'}: {m['content']}"

@@ -77,7 +77,7 @@ class TechnicalAgent:
         self.retriever = HybridRetriever(documents=documents, vectorstore=vectorstore)
         self.compressor = ContextCompressor(embeddings=get_embeddings())
         self.search = DuckDuckGoSearchRun()
-        self.tools = [is_safe, self.search]
+        self.tools = [is_safe, handoff, self.search]
 
         self.executor = create_agent(
             model=self.llm,
@@ -110,6 +110,8 @@ class TechnicalAgent:
                 "response": f"I cannot process this request: {safety_result['reason']}",
                 "retrieved_docs": [],
                 "used_web_search": False,
+                # "needs_handoff": False,
+                # "handoff_reason": "",
             }
 
         # Run agent — checks if handoff is needed

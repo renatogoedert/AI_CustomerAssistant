@@ -1,7 +1,98 @@
 {
   "name": "admin",
-  "history": [],
+  "history": [
+    {
+      "role": "user",
+      "content": "What are your opening hours?",
+      "timestamp": "2026-06-11T17:25:56.417614"
+    },
+    {
+      "role": "assistant",
+      "content": "Omnia Retail Warehouse is open Monday to Friday from 09:00 to 17:30.",
+      "timestamp": "2026-06-11T17:25:56.417623"
+    },
+    {
+      "role": "user",
+      "content": "My laptop keeps shutting down randomly",
+      "timestamp": "2026-06-11T17:26:25.616888"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm sorry to hear your laptop keeps shutting down unexpectedly. Based on what you've described, this is often caused by overheating due to blocked ventilation. Here’s how you can troubleshoot and help prevent these shutdowns:\n\n1. **Check where you use your laptop:**  \n   Make sure you place your laptop on a hard, flat surface like a desk or table. Using it on soft surfaces like a sofa cushion can block the bottom vents and cause overheating.\n\n2. **Improve airflow:**  \n   Consider using a laptop stand with passive cooling, such as the Nexstand K2, which we recommend and sell for €35 at Omnia Retail. This helps keep air flowing under your laptop.\n\n3. **Enable HP Fan Always On in BIOS:**  \n   Restart your laptop and enter the BIOS settings (usually by pressing Esc or F10 during startup). Look for the “Fan Always On” option and enable it to improve baseline cooling.\n\n4. **Run HP Support Assistant diagnostics:**  \n   If you haven’t already, run the thermal diagnostics in HP Support Assistant to check for CPU throttling or overheating.\n\n5. **Keep vents clean:**  \n   Regularly check and clean the laptop’s air vents to remove dust buildup.\n\nIf you continue to experience shutdowns after trying these steps, please let me know your laptop model and any details from Task Manager (press Ctrl+Shift+Esc) about CPU or memory usage, and I can help you further.",
+      "timestamp": "2026-06-11T17:26:25.616896"
+    },
+    {
+      "role": "user",
+      "content": "I want to return my laptop",
+      "timestamp": "2026-06-11T17:26:33.906236"
+    },
+    {
+      "role": "assistant",
+      "content": "To assist you with your laptop return, could you please provide the order ID and the purchase or delivery date? Also, let me know if the laptop is unopened, opened but unused, or if there is any defect or issue with it. This will help me check the eligibility for return based on our policy.",
+      "timestamp": "2026-06-11T17:26:33.906246"
+    },
+    {
+      "role": "user",
+      "content": "What are your opening hours?",
+      "timestamp": "2026-06-11T17:26:45.841538"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm having trouble processing your request. Please contact our support team directly at support@omniaretail.ie or call 01-XXX-XXXX for immediate assistance.",
+      "timestamp": "2026-06-11T17:26:45.841558"
+    },
+    {
+      "role": "user",
+      "content": "My laptop keeps shutting down randomly",
+      "timestamp": "2026-06-11T17:32:45.419323"
+    },
+    {
+      "role": "assistant",
+      "content": "I’m sorry to hear your laptop keeps shutting down unexpectedly. Based on what you’ve described, this is typically caused by overheating due to blocked ventilation. Here’s how you can troubleshoot and help prevent these shutdowns:\n\n1. **Use your laptop on a hard, flat surface**  \n   Avoid placing it on soft surfaces like sofa cushions or beds, as these block the bottom vents and cause overheating.\n\n2. **Consider a laptop stand with passive cooling**  \n   We recommend the Nexstand K2, available for €35 at Omnia Retail. It helps improve airflow under your laptop.\n\n3. **Enable the HP Fan Always On feature in BIOS**  \n   Restart your laptop and press Esc or F10 repeatedly during startup to enter BIOS. Find the “Fan Always On” setting and enable it to keep the fan running at a baseline speed for better cooling.\n\n4. **Run HP Support Assistant diagnostics**  \n   If you haven’t already, run the thermal test to check for CPU throttling or overheating.\n\n5. **Keep vents clean**  \n   Regularly check and gently clean the air vents to remove dust buildup.\n\nIf you continue to experience shutdowns after trying these steps, please let me know your laptop model and any details from Task Manager (Ctrl+Shift+Esc) about CPU or memory usage, and I’ll help you diagnose further.",
+      "timestamp": "2026-06-11T17:32:45.419362"
+    },
+    {
+      "role": "user",
+      "content": "I want to return my laptop",
+      "timestamp": "2026-06-11T17:32:52.084950"
+    },
+    {
+      "role": "assistant",
+      "content": "To assist you with your laptop return, could you please provide the order ID and the purchase or delivery date? Also, let me know if the laptop is unopened, opened but unused, or if there is any defect or issue with it. This information will help me check if your return is eligible under our policy.",
+      "timestamp": "2026-06-11T17:32:52.084967"
+    },
+    {
+      "role": "user",
+      "content": "What are your opening hours?",
+      "timestamp": "2026-06-11T17:33:07.796384"
+    },
+    {
+      "role": "assistant",
+      "content": "Our Omnia Retail Warehouse is located at Park West Business Campus, Dublin 12. The opening hours are Monday to Friday, from 09:00 to 17:30. If you need further assistance, please let me know!",
+      "timestamp": "2026-06-11T17:33:07.796396"
+    },
+    {
+      "role": "user",
+      "content": "What is the status of my order ORD-2024-5001?",
+      "timestamp": "2026-06-11T17:34:55.603294"
+    },
+    {
+      "role": "assistant",
+      "content": "Your order ORD-2024-5001 for the Apple MacBook Pro M3 was delivered on 6th May 2024 and is currently marked as delivered. \n\nTo proceed with the return, could you please specify if the laptop is unopened, opened but unused, or if there is any defect or issue with it? This will help me check the eligibility for return based on our policy.",
+      "timestamp": "2026-06-11T17:34:55.603301"
+    },
+    {
+      "role": "user",
+      "content": "exit",
+      "timestamp": "2026-06-11T17:35:33.382642"
+    },
+    {
+      "role": "assistant",
+      "content": "I couldn't find relevant information for your query in our documentation. Please contact our support team directly at support@omniaretail.ie or call 01-XXX-XXXX.",
+      "timestamp": "2026-06-11T17:35:33.382650"
+    }
+  ],
   "created_at": "2026-06-09T23:00:01.227066",
-  "last_seen": "2026-06-10T18:12:03.303862",
-  "current_agent": ""
+  "last_seen": "2026-06-11T17:35:33.382652",
+  "current_agent": "GeneralAgent"
 }

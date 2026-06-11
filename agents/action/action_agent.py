@@ -151,7 +151,7 @@ class ActionAgent:
             system_prompt=SYSTEM_PROMPT,
         )
 
-    def process(self, query: str, history: str = "") -> dict:
+    def process(self, query: str,username: str = "", history: str = "") -> dict:
 
         """
         Process an action request — order status, refund, or inventory check.
@@ -168,6 +168,12 @@ class ActionAgent:
                 "needs_handoff": False,
                 "handoff_reason": "",
             }
+
+        # Build query with username context
+        active_username = username or self.username
+        full_query = f"{query}\n\nNote: The logged-in customer username is '{active_username}'."
+        if history:
+            full_query = f"Conversation so far:\n{history}\n\nCustomer: {query}\nNote: username is '{active_username}'."
 
         # Run agent — checks if handoff is needed
         exec_result = self.executor.invoke({
@@ -189,11 +195,13 @@ class ActionAgent:
         })
 
         # Extract tool calls made
-        actions_taken = []
-        for msg in result["messages"]:
-            if hasattr(msg, "tool_calls") and msg.tool_calls:
-                for call in msg.tool_calls:
-                    actions_taken.append(call.get("name", "unknown"))
+        actions_taken = [
+            call.get("name", "unknown")
+            for msg in exec_result["messages"]
+            if hasattr(msg, "tool_calls") and msg.tool_calls
+            for call in msg.tool_calls
+            if call.get("name") not in ("handoff", "is_safe")
+        ]
 
         response = result["messages"][-1].content
 

@@ -21,8 +21,7 @@ SYSTEM_PROMPT_TEMPLATE = """
 
     Important:
     - You do NOT process returns yourself — you validate eligibility and confirm details
-    - If the customer has a technical issue (not a return) → use the handoff tool
-    - If the customer needs warranty support → use the handoff tool
+    - If the query is not related to returns/refund - use the handoff tool
 
     Examples:
 

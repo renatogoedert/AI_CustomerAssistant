@@ -71,6 +71,78 @@
       ],
       "total": 599.99,
       "refund_status": null
+    },
+    "ORD-2024-5001": {
+      "order_id": "ORD-2024-5001",
+      "user": "admin",
+      "date_placed": "2024-05-01",
+      "date_expected": "2024-05-05",
+      "date_delivered": "2024-05-06",
+      "status": "delivered",
+      "items": [
+        {
+          "product": "Apple MacBook Pro M3",
+          "quantity": 1,
+          "price": 1999.99,
+          "condition": "good"
+        }
+      ],
+      "total": 1999.99,
+      "refund_status": null
+    },
+    "ORD-2024-5002": {
+      "order_id": "ORD-2024-5002",
+      "user": "admin",
+      "date_placed": "2024-05-10",
+      "date_expected": "2024-05-15",
+      "date_delivered": "2024-05-16",
+      "status": "delivered",
+      "items": [
+        {
+          "product": "Logitech MX Master 3S Mouse",
+          "quantity": 1,
+          "price": 89.99,
+          "condition": "damaged"
+        }
+      ],
+      "total": 89.99,
+      "refund_status": null
+    },
+    "ORD-2024-5003": {
+      "order_id": "ORD-2024-5003",
+      "user": "admin",
+      "date_placed": "2024-05-20",
+      "date_expected": "2024-05-25",
+      "date_delivered": null,
+      "status": "in_transit",
+      "items": [
+        {
+          "product": "WD Black SN850X 2TB NVMe",
+          "quantity": 1,
+          "price": 179.99,
+          "condition": null
+        }
+      ],
+      "total": 179.99,
+      "refund_status": null
+    },
+    "ORD-2024-5004": {
+      "order_id": "ORD-2024-5004",
+      "user": "admin",
+      "date_placed": "2024-06-01",
+      "date_expected": "2024-06-05",
+      "date_delivered": "2024-06-06",
+      "status": "delivered",
+      "items": [
+        {
+          "product": "Dell UltraSharp 27 4K Monitor",
+          "quantity": 1,
+          "price": 599.99,
+          "condition": "good"
+        }
+      ],
+      "total": 599.99,
+      "refund_status": null
     }
   },
   "inventory": {

@@ -74,7 +74,7 @@ def _llm_classify(query: str) -> dict:
         - technical: troubleshooting, setup, compatibility, product not working
         - warranty: defects, faults, repairs, dead on arrival
         - returns: refunds, exchanges, change of mind, cooling off period
-        - delivery: shipping, tracking, not arrived, damaged in transit
+        - delivery: shipping, tracking, not arrived, damaged in transit, inventory 
         - bulk: business orders, volume pricing, procurement
         - escalation: complaints, manager requests, legal threats
         - general: policies, payments, account, product info

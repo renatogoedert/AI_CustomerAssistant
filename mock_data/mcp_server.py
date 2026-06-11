@@ -7,7 +7,7 @@ Exposes order status, refund processing, and inventory checking
 as MCP tools that agents can call.
 
 Usage:
-    python mock_data/mcp_server.py
+    python -m mock_data.mcp_server 
 
 The server runs on http://localhost:8000/mcp by default.
 """
