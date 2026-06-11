@@ -9,7 +9,7 @@ from config.llm_config import get_llm
 
 ROUTING = {
     "technical":  "TechnicalAgent",
-    "warranty":   "WarrantyAgent",
+    "warranty":   "ActionAgent",
     "returns":    "ActionAgent",
     "delivery":   "ActionAgent",
     "bulk":       "GeneralAgent",
@@ -31,7 +31,7 @@ SYSTEM_PROMPT = """
     Result: {"safe": true, "category": "technical", "urgency": "medium", "route_to": "TechnicalAgent", "reason": "Technical issue detected"}
 
     Query: "I want to return my mouse, changed my mind"
-    Result: {"safe": true, "category": "returns", "urgency": "low", "route_to": "GeneralAgent", "reason": "Return request"}
+    Result: {"safe": true, "category": "returns", "urgency": "low", "route_to": "ActionAgent", "reason": "Return request"}
 
     Query: "My order hasn't arrived and I need it urgently for tomorrow"
     Result: {"safe": true, "category": "delivery", "urgency": "high", "route_to": "GeneralAgent", "reason": "Urgent delivery issue"}
@@ -103,6 +103,7 @@ class TriageAgent:
         except Exception:
             print(f"  [TriageAgent] Warning: could not parse agent response: {response[:100]}")
 
+        # Fallback
         return {
             "safe": True,
             "category": "unknown",

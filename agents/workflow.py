@@ -198,7 +198,6 @@ def action_node(state: OmniaState, action_agent: ActionAgent) -> OmniaState:
 ROUTING_MAP = {
     "TechnicalAgent":  "technical",
     "ActionAgent":     "action",
-    "WarrantyAgent":   "action",
     "EscalationAgent": "escalation",
     "GeneralAgent":    "general",
 }
