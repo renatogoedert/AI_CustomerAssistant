@@ -71,9 +71,8 @@ class DeliveryAgent:
     Specialist agent for delivery and shipping queries.
     """
 
-    def __init__(self, documents: list[dict], action_agent):
+    def __init__(self, documents: list[dict]):
         self.llm = get_llm(temperature=0.2)
-        self.action_agent = action_agent
         self.policy = _load_policy(documents, "policy_003")
         self.tools = [is_safe, handoff, ready_for_action]
 
@@ -111,30 +110,19 @@ class DeliveryAgent:
         if handoff_result:
             return {**handoff_result, "safe": True}
 
-        # Check for ready_for_action tool call
+        # Check for ready_for_action
         for msg in exec_result["messages"]:
             if hasattr(msg, "tool_calls") and msg.tool_calls:
                 for call in msg.tool_calls:
                     if call.get("name") == "ready_for_action":
                         args = call.get("args", {})
-                        action_type = args.get("action_type", "check_status")
-
-                        if action_type == "check_status":
-                            action_query = f"Check order status for order {args.get('order_id')}"
-                        elif action_type == "report_damaged":
-                            action_query = f"Process refund for order {args.get('order_id')} — reason: item arrived damaged"
-                        else:
-                            action_query = f"Check order status for missing order {args.get('order_id')}"
-
-                        action_result = self.action_agent.process(
-                            action_query, username=username
-                        )
                         return {
                             "safe": True,
-                            "response": action_result["response"],
-                            "needs_handoff": False,
-                            "handoff_reason": "",
-                            "action_taken": args,
+                            "response": exec_result["messages"][-1].content,
+                            "needs_handoff": True,
+                            "handoff_reason": f"Delivery action required for order {args.get('order_id')}",
+                            "route_to": "ActionAgent",
+                            "specialist_action": args,
                         }
 
         return {

@@ -165,6 +165,8 @@ class ActionAgent:
                 "safe": False,
                 "response": f"I cannot process this request: {safety_result['reason']}",
                 "actions_taken": [],
+                "needs_handoff": False,
+                "handoff_reason": "",
             }
 
         # Run agent — checks if handoff is needed
@@ -199,4 +201,6 @@ class ActionAgent:
             "safe": True,
             "response": response,
             "actions_taken": actions_taken,
+            "needs_handoff": False,
+            "handoff_reason": "",
         }

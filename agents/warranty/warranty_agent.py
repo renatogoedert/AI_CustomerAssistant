@@ -71,9 +71,8 @@ class WarrantyAgent:
     Specialist agent for warranty claims.
     """
 
-    def __init__(self, documents: list[dict], action_agent):
+    def __init__(self, documents: list[dict]):
         self.llm = get_llm(temperature=0.2)
-        self.action_agent = action_agent
         self.policy = _load_policy(documents, "policy_002")
         self.tools = [is_safe, handoff, ready_for_action]
 
@@ -111,25 +110,19 @@ class WarrantyAgent:
         if handoff_result:
             return {**handoff_result, "safe": True}
 
-        # Check for ready_for_action tool call
+        # Check for ready_for_action
         for msg in exec_result["messages"]:
             if hasattr(msg, "tool_calls") and msg.tool_calls:
                 for call in msg.tool_calls:
                     if call.get("name") == "ready_for_action":
                         args = call.get("args", {})
-                        action_query = (
-                            f"Process a warranty claim for order {args.get('order_id')} — "
-                            f"fault: {args.get('fault_description')} — reason: {args.get('reason')}"
-                        )
-                        action_result = self.action_agent.process(
-                            action_query, username=username
-                        )
                         return {
                             "safe": True,
-                            "response": action_result["response"],
-                            "needs_handoff": False,
-                            "handoff_reason": "",
-                            "action_taken": args,
+                            "response": exec_result["messages"][-1].content,
+                            "needs_handoff": True,
+                            "handoff_reason": f"Warranty claim confirmed for order {args.get('order_id')}",
+                            "route_to": "ActionAgent",
+                            "specialist_action": args,
                         }
 
         return {
