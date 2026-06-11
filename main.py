@@ -9,13 +9,15 @@ import warnings
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-import agents.tools.safety as safety_module
 from config.llm_config import get_embeddings
 from agents.triage.triage_agent import TriageAgent
 from agents.general.general_info_agent import GeneralAgent
 from agents.technical.technical_agent import TechnicalAgent
 from agents.action.action_agent import ActionAgent
-from agents.workflow import build_workflow, OmniaState
+from agents.returns.returns_agent import ReturnsAgent
+from agents.warranty.warranty_agent import WarrantyAgent
+from agents.delivery.delivery_agent import DeliveryAgent
+from agents.workflow import build_workflow
 
 SHARED_PASSWORD = "123456"
 ADMIN_NAME      = "admin"
@@ -120,12 +122,15 @@ def setup(username: str, debug: bool = False):
     debug and print(f"✓ Loaded {len(documents)} documents")
     debug and print("Initialising agents...")
 
-    triage    = TriageAgent()
-    general   = GeneralAgent(documents=documents, vectorstore=vectorstore)
-    technical = TechnicalAgent(documents=documents, vectorstore=vectorstore)
-    action    = ActionAgent(username=username)
+    triage      = TriageAgent()
+    general     = GeneralAgent(documents=documents, vectorstore=vectorstore)
+    technical   = TechnicalAgent(documents=documents, vectorstore=vectorstore)
+    action      = ActionAgent(username=username)
+    returns     = ReturnsAgent(documents=documents)
+    warranty    = WarrantyAgent(documents=documents)
+    delivery    = DeliveryAgent(documents=documents)
 
-    workflow = build_workflow(triage, general, technical, action)
+    workflow = build_workflow(triage, general, technical, action, returns, warranty, delivery)
 
     debug and print("✓ Agents and workflow ready\n")
     return workflow
@@ -172,7 +177,6 @@ def run_session(name: str, is_admin: bool, workflow):
             continue
         if query.lower() == "debug":
             debug = not debug
-            safety_module.DEBUG = debug
             print(f"--- Debug mode {'enabled' if debug else 'disabled'} ---\n")
             continue
 
@@ -191,7 +195,8 @@ def run_session(name: str, is_admin: bool, workflow):
             "handoff_reason": "",
             "response":       "",
             "retrieved_docs": [],
-            "actions_taken":  [],
+            "mcp_tools_called": [],
+            "specialist_action": None,
             "used_web_search": False,
             "processing_log": [],
         })
