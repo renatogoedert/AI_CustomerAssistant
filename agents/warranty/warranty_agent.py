@@ -1,10 +1,3 @@
-# Based on Code for Class 10 (week10_multiagent.py) — specialist agent pattern
-
-"""
-Warranty Agent for Omnia Retail Ltd.
-Handles warranty claims using the warranty policy (policy_002).
-Validates eligibility against policy before calling ActionAgent.
-"""
 from langchain.agents import create_agent
 from langchain_core.tools import tool
 
@@ -12,48 +5,47 @@ from agents.tools.safety import is_safe
 from agents.tools.handoff import handoff, check_for_handoff
 from config.llm_config import get_llm
 
+SYSTEM_PROMPT_TEMPLATE = """
+    You are a warranty specialist at Omnia Retail Ltd, an Irish electronics retailer.
+
+    You help customers with warranty claims based on Omnia Retail's warranty policy.
+
+    Warranty Policy:
+    {policy}
+
+    Your responsibilities:
+    1. Explain the warranty terms clearly to the customer
+    2. Validate if the customer's claim meets the policy requirements
+    3. If eligible — confirm the details and signal to process the claim
+    4. If not eligible — explain why clearly and what alternatives exist
+
+    Important:
+    - You do NOT process warranty claims yourself — you validate eligibility and confirm details
+    - If the customer wants a return/refund (not warranty) → use the handoff tool
+    - If the customer has a technical issue to troubleshoot → use the handoff tool
+    - Always check purchase date and product condition before confirming eligibility
+
+    Examples:
+
+    Customer: "My laptop stopped working after 8 months, is it under warranty?"
+    Response: Check warranty period and conditions, ask for order ID and description of fault.
+
+    Customer: "I dropped my phone and the screen cracked"
+    Response: Accidental damage — likely not covered. Explain policy and alternatives.
+
+    Customer: "I want to return my laptop, changed my mind"
+    Action: handoff(reason="Customer wants a return — not a warranty claim")
+"""
 
 def _load_policy(documents: list[dict], policy_id: str) -> str:
     policy = next((doc for doc in documents if doc["document_id"] == policy_id), None)
     return policy["content"] if policy else ""
 
-
-SYSTEM_PROMPT_TEMPLATE = """You are a warranty specialist at Omnia Retail Ltd, an Irish electronics retailer.
-
-You help customers with warranty claims based on Omnia Retail's warranty policy.
-
-Warranty Policy:
-{policy}
-
-Your responsibilities:
-1. Explain the warranty terms clearly to the customer
-2. Validate if the customer's claim meets the policy requirements
-3. If eligible — confirm the details and signal to process the claim
-4. If not eligible — explain why clearly and what alternatives exist
-
-Important:
-- You do NOT process warranty claims yourself — you validate eligibility and confirm details
-- If the customer wants a return/refund (not warranty) → use the handoff tool
-- If the customer has a technical issue to troubleshoot → use the handoff tool
-- Always check purchase date and product condition before confirming eligibility
-
-Examples:
-
-Customer: "My laptop stopped working after 8 months, is it under warranty?"
-Response: Check warranty period and conditions, ask for order ID and description of fault.
-
-Customer: "I dropped my phone and the screen cracked"
-Response: Accidental damage — likely not covered. Explain policy and alternatives.
-
-Customer: "I want to return my laptop, changed my mind"
-Action: handoff(reason="Customer wants a return — not a warranty claim")"""
-
-
 @tool
 def ready_for_action(order_id: str, reason: str, fault_description: str) -> dict:
+
     """
     Signal that warranty eligibility has been confirmed and claim can proceed.
-    Use when the customer's fault is covered under warranty policy.
 
     Args:
         order_id: The order ID in format ORD-YYYY-XXXX
@@ -63,6 +55,7 @@ def ready_for_action(order_id: str, reason: str, fault_description: str) -> dict
     Returns:
         Structured action request for ActionAgent.
     """
+
     return {
         "ready": True,
         "order_id": order_id,
@@ -73,10 +66,9 @@ def ready_for_action(order_id: str, reason: str, fault_description: str) -> dict
 
 
 class WarrantyAgent:
+
     """
     Specialist agent for warranty claims.
-    Loads warranty policy directly — no RAG retrieval needed.
-    Validates eligibility before passing structured request to ActionAgent.
     """
 
     def __init__(self, documents: list[dict], action_agent):
@@ -94,10 +86,12 @@ class WarrantyAgent:
         )
 
     def process(self, query: str, username: str, history: str = "") -> dict:
+
         """
         Process a warranty claim request.
         Returns {"response", "safe", "needs_handoff", "handoff_reason", "action_taken"}.
         """
+        
         safety_result = is_safe.invoke(query)
         if not safety_result["safe"]:
             return {

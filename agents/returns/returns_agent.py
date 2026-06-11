@@ -50,7 +50,6 @@ def ready_for_action(order_id: str, reason: str, action_type: str) -> dict:
 
     """
     Signal that return/refund eligibility has been confirmed and action can proceed.
-    Use this when the customer's request meets policy requirements.
 
     Args:
         order_id: The order ID in format ORD-YYYY-XXXX
