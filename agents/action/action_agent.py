@@ -172,10 +172,10 @@ class ActionAgent:
             "messages": [("human", query)]
         })
  
-        # Check for handoff tool call
+        # Check for handoff
         handoff_result = check_for_handoff(exec_result)
         if handoff_result:
-            return {**handoff_result, "safe": True, "retrieved_docs": [], "needs_handoff": True}
+            return {**handoff_result, "safe": True}
 
         # Build message with history context
         full_query = f"{query}\n\nNote: The logged-in customer username is '{self.username}'."

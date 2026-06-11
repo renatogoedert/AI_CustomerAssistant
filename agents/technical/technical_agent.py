@@ -117,10 +117,10 @@ class TechnicalAgent:
             "messages": [("human", query)]
         })
  
-        # Check for handoff tool call
+        # Check for handoff
         handoff_result = check_for_handoff(exec_result)
         if handoff_result:
-            return {**handoff_result, "safe": True, "retrieved_docs": [], "used_web_search": False, "needs_handoff": True}
+            return {**handoff_result, "safe": True}
         
         # RAG
         retrieved = self.retriever.retrieve(query)

@@ -115,7 +115,7 @@ class ReturnsAgent:
         # Check for handoff
         handoff_result = check_for_handoff(exec_result)
         if handoff_result:
-            return {**handoff_result, "safe": True, "action_taken": None, "needs_handoff": True}
+            return {**handoff_result, "safe": True}
 
         # Check for ready_for_action tool call
         for msg in exec_result["messages"]:
