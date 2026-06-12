@@ -74,6 +74,7 @@ class TechnicalAgent:
 
     def __init__(self, documents: list[dict], vectorstore):
         self.llm = get_llm(temperature=0.2)
+        self.hyde_llm = get_llm(temperature=0.7)
         self.retriever = HybridRetriever(documents=documents, vectorstore=vectorstore)
         self.compressor = ContextCompressor(embeddings=get_embeddings())
         self.search = DuckDuckGoSearchRun()
@@ -93,13 +94,33 @@ class TechnicalAgent:
             return self.search.invoke(query)
         except Exception as e:
             return f"Web search unavailable: {str(e)}"
+        
+    def _generate_hypothesis(self, query: str) -> str:
+
+        """
+        Generate a hypothetical document to improve RAG retrieval (HyDE technique).
+        Based on: Gao et al. (2023)
+        """
+        prompt = f"""
+            You are generating a hypothetical document for Omnia Retail Ltd, an Irish electronics retailer.
+            The knowledge base contains: policies, FAQs, and support tickets.
+            
+            Write a short hypothetical document (under 100 words) that would answer this query.
+            Write it as a document excerpt, not as a response to a customer.
+            It may contain inaccuracies — focus on using the right structure and vocabulary.
+            
+            Query: {query}
+            
+            Hypothetical document:
+        """
+        response = self.hyde_llm.invoke(prompt)
+        return response.content.strip()
 
     def process(self, query: str, history: str = "", debug: bool = False) -> dict:
 
         """
         Process a technical support query.
         Uses RAG first, falls back to web search if needed.
-        Returns {"response": str, "retrieved_docs": list, "used_web_search": bool, "safe": bool}.
         """
 
         # Safety check
@@ -131,8 +152,9 @@ class TechnicalAgent:
         if handoff_result:
             return {**handoff_result, "safe": True}
         
-        # RAG
-        retrieved = self.retriever.retrieve(query)
+        # HyDE
+        hypothesis = self._generate_hypothesis(query)
+        retrieved = self.retriever.retrieve(hypothesis)
         compressed = self.compressor.compress(query, retrieved) if retrieved else []
         rag_context = "\n\n".join([doc.page_content for doc in compressed]) if compressed else ""
 

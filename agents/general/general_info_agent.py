@@ -68,6 +68,7 @@ class GeneralAgent:
 
     def __init__(self, documents: list[dict], vectorstore):
         self.llm = get_llm(provider='openai', model_name='gpt-4.1-mini', temperature=0.3)
+        self.hyde_llm = get_llm(provider='openai', model_name='gpt-4.1-mini', temperature=0.7)
         self.retriever = HybridRetriever(documents=documents, vectorstore=vectorstore)
         self.compressor = ContextCompressor(embeddings=get_embeddings())
         self.tools = [is_safe, handoff]
@@ -77,6 +78,30 @@ class GeneralAgent:
             tools=self.tools,
             system_prompt=SYSTEM_PROMPT,
         )
+    
+    def _generate_hypothesis(self, query: str) -> str:
+
+        """
+        Generate a hypothetical document to improve RAG retrieval (HyDE technique).
+        Based on: Gao et al. (2023)
+        """
+
+        prompt = f"""
+            You are generating a hypothetical document for Omnia Retail Ltd, an Irish electronics retailer.
+            
+            The knowledge base contains: policies, FAQs, and support tickets.
+            
+            Write a short hypothetical document (under 100 words) that would answer this query.
+            Write it as a document excerpt, not as a response to a customer.
+            It may contain inaccuracies — focus on using the right structure and vocabulary.
+            
+            Query: {query}
+            
+            Hypothetical document:
+        """
+
+        response = self.hyde_llm.invoke(prompt)
+        return response.content.strip()
 
     def process(self, query: str, history: str = "", debug: bool = False) -> dict:
 
@@ -113,8 +138,9 @@ class GeneralAgent:
         if handoff_result:
             return {**handoff_result, "safe": True}
         
-        # Retrieve relevant documents
-        retrieved = self.retriever.retrieve(query)
+        # HyDE
+        hypothesis = self._generate_hypothesis(query)
+        retrieved = self.retriever.retrieve(hypothesis)
 
         if not retrieved:
             return {
