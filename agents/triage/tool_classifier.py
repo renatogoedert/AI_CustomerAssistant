@@ -27,10 +27,12 @@ URGENCY_KEYWORDS = {
 
 # Code based on Class 9 Lab
 def _keyword_classify(query: str) -> dict | None:
+    
     """
     Fast keyword-based classification.
     Returns a result dict if confident, None if inconclusive.
     """
+
     query_lower = query.lower()
 
     # Category
@@ -60,10 +62,12 @@ def _keyword_classify(query: str) -> dict | None:
 
 # Code based on Class 9 Lab
 def _llm_classify(query: str) -> dict:
+
     """
     LLM-based classification for ambiguous queries.
     Used as fallback when keyword matching is inconclusive.
     """
+
     llm = get_llm(temperature=0)
 
     prompt = f"""

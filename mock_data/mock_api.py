@@ -3,9 +3,9 @@ Mock backend API for Omnia Retail Ltd.
 Simulates REST API calls using a local JSON file as the database.
 
 APIs:
-    - check_order_status(order_id, username) → order details
-    - process_refund(order_id, username, reason) → refund confirmation
-    - check_inventory(product_name) → stock levels
+    - check_order_status(order_id, username) - order details
+    - process_refund(order_id, username, reason) - refund confirmation
+    - check_inventory(product_name) - stock levels
 """
 import json
 import uuid

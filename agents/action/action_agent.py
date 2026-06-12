@@ -24,8 +24,8 @@ SYSTEM_PROMPT = """
     - Only process refunds for delivered orders
     - If an action fails, explain clearly why and what the customer can do instead
     - If the MCP server is unavailable, inform the customer and suggest contacting support@omniaretail.ie
-    - If the customer asks a general information question (return policy, warranty info, delivery times) → use the handoff tool
-    - If the customer has a technical issue → use the handoff tool
+    - If the customer asks a general information question (return policy, warranty info, delivery times) - use the handoff tool
+    - If the customer has a technical issue - use the handoff tool
     
     Examples:
     

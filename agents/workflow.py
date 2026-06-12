@@ -122,9 +122,9 @@ def general_node(state: OmniaState, general_agent: GeneralAgent) -> OmniaState:
 
     # Handoff detection
     if result.get("needs_handoff"):
-        log.append(f"GeneralAgent: handoff → triage ({result.get('handoff_reason', '')})")
+        log.append(f"GeneralAgent: handoff - triage ({result.get('handoff_reason', '')})")
         if state.get("debug"):
-            print(f"  [GeneralAgent] Handoff → triage — {result.get('handoff_reason', '')}")
+            print(f"  [GeneralAgent] Handoff - triage — {result.get('handoff_reason', '')}")
         return {
             "needs_handoff":  True,
             "handoff_reason": result.get("handoff_reason", ""),
@@ -160,9 +160,9 @@ def technical_node(state: OmniaState, technical_agent: TechnicalAgent) -> OmniaS
 
     # Handoff detection
     if result.get("needs_handoff"):
-        log.append(f"TechnicalAgent: handoff → triage ({result.get('handoff_reason', '')})")
+        log.append(f"TechnicalAgent: handoff - triage ({result.get('handoff_reason', '')})")
         if state.get("debug"):
-            print(f"  [TechnicalAgent] Handoff → triage — {result.get('handoff_reason', '')}")
+            print(f"  [TechnicalAgent] Handoff - triage — {result.get('handoff_reason', '')}")
         return {
             "needs_handoff":  True,
             "handoff_reason": result.get("handoff_reason", ""),
@@ -231,9 +231,9 @@ def returns_node(state: OmniaState, returns_agent: ReturnsAgent) -> OmniaState:
     # Handoff detection
     if result.get("needs_handoff"):
         route = result.get("route_to", "triage")
-        log.append(f"ReturnsAgent: handoff → {route} ({result.get('handoff_reason', '')})")
+        log.append(f"ReturnsAgent: handoff - {route} ({result.get('handoff_reason', '')})")
         if state.get("debug"):
-            print(f"  [ReturnsAgent] Handoff → {route} — {result.get('handoff_reason', '')}")
+            print(f"  [ReturnsAgent] Handoff - {route} — {result.get('handoff_reason', '')}")
         return {
             "needs_handoff":  True,
             "handoff_reason": result.get("handoff_reason", ""),
@@ -267,9 +267,9 @@ def warranty_node(state: OmniaState, warranty_agent: WarrantyAgent) -> OmniaStat
     # Handoff detection
     if result.get("needs_handoff"):
         route = result.get("route_to", "triage")
-        log.append(f"WarrantyAgent: handoff → {route} ({result.get('handoff_reason', '')})")
+        log.append(f"WarrantyAgent: handoff - {route} ({result.get('handoff_reason', '')})")
         if state.get("debug"):
-            print(f"  [WarrantyAgent] Handoff → {route} — {result.get('handoff_reason', '')}")
+            print(f"  [WarrantyAgent] Handoff - {route} — {result.get('handoff_reason', '')}")
         return {
             "needs_handoff":  True,
             "handoff_reason": result.get("handoff_reason", ""),
@@ -303,9 +303,9 @@ def delivery_node(state: OmniaState, delivery_agent: DeliveryAgent) -> OmniaStat
     # Handoff detection
     if result.get("needs_handoff"):
         route = result.get("route_to", "triage")
-        log.append(f"DeliveryAgent: handoff → {route} ({result.get('handoff_reason', '')})")
+        log.append(f"DeliveryAgent: handoff - {route} ({result.get('handoff_reason', '')})")
         if state.get("debug"):
-            print(f"  [DeliveryAgent] Handoff → {route} — {result.get('handoff_reason', '')}")
+            print(f"  [DeliveryAgent] Handoff - {route} — {result.get('handoff_reason', '')}")
         return {
             "needs_handoff":  True,
             "handoff_reason": result.get("handoff_reason", ""),

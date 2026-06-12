@@ -45,6 +45,52 @@ SYSTEM_PROMPT = """
     Always return a JSON object with keys: safe, category, urgency, route_to, reason.
 """
 
+DECOMPOSE_PROMPT = """
+    You are a query analyser for Omnia Retail customer support.
+    
+    Determine if the customer query contains MULTIPLE distinct issues that need different specialists.
+    
+    A query is COMPLEX if it mentions multiple issues needing different agents:
+    - Damaged item AND late item
+    - Return request AND technical issue
+    - Multiple orders with different problems
+    
+    A query is SIMPLE if it is about one issue, even if detailed.
+    
+    For COMPLEX queries, break into sub-queries with categories.
+    For SIMPLE queries, return complex: false.
+    
+    Categories: general, technical, returns, warranty, delivery
+    
+    Return ONLY valid JSON:
+    
+    Simple: {"complex": false, "sub_queries": []}
+    
+    Complex: {"complex": true, "sub_queries": [
+        {"query": "...", "category": "..."},
+        {"query": "...", "category": "..."}
+    ]}
+    
+    Examples:
+    
+    Input: "My laptop screen is flickering"
+    Output: {"complex": false, "sub_queries": []}
+    
+    Input: "I ordered 2 items, one arrived damaged and the other is late"
+    Output: {"complex": true, "sub_queries": [
+        {"query": "My item arrived damaged, I want a refund", "category": "returns"},
+        {"query": "My other item is late and hasn't arrived", "category": "delivery"}
+    ]}
+    
+    Input: "My laptop is broken and I want to check my order status"
+    Output: {"complex": true, "sub_queries": [
+        {"query": "My laptop is broken", "category": "technical"},
+        {"query": "I want to check my order status", "category": "delivery"}
+    ]}
+    
+    Return ONLY the JSON object, no other text.
+"""
+
 # Code based on Class 10 Lab
 class TriageAgent:
 
@@ -64,6 +110,29 @@ class TriageAgent:
             system_prompt=SYSTEM_PROMPT,
         )
 
+    def decompose(self, query: str) -> dict:
+
+        """
+        Check if query is complex and decompose into sub-queries.
+        Returns {"complex": bool, "sub_queries": list}.
+        """
+        
+        prompt = f"{DECOMPOSE_PROMPT}\n\nInput: {query}\nOutput:"
+        response = self.llm.invoke(prompt)
+ 
+        try:
+            json_match = re.search(r'\{.*\}', response.content, re.DOTALL)
+            if json_match:
+                result = json.loads(json_match.group())
+                # Add route_to to each sub-query
+                for sq in result.get("sub_queries", []):
+                    sq["route_to"] = ROUTING.get(sq.get("category"), "GeneralAgent")
+                return result
+        except Exception:
+            pass
+ 
+        return {"complex": False, "sub_queries": []}
+    
     def process(self, query: str) -> dict:
 
         """

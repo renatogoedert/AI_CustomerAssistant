@@ -82,7 +82,7 @@ What did I order with ORD-2024-5003?
 
 ## 7. ActionAgent — Refunds
 
-Refund flows via ReturnsAgent → ActionAgent.
+Refund flows via ReturnsAgent - ActionAgent.
 
 ```
 I want a refund for my damaged mouse, order ORD-2024-5002
@@ -103,7 +103,7 @@ How many Dell monitors do you have in stock?
 
 ---
 
-## 9. Handoff — GeneralAgent → TechnicalAgent
+## 9. Handoff — GeneralAgent - TechnicalAgent
 
 Start with a general query, then introduce a technical issue.
 
@@ -112,11 +112,11 @@ Turn 1: What is your return policy?
 Turn 2: Actually my laptop screen is not turning on
 ```
 
-Expected: Turn 1 → GeneralAgent, Turn 2 → handoff → TechnicalAgent
+Expected: Turn 1 - GeneralAgent, Turn 2 - handoff - TechnicalAgent
 
 ---
 
-## 10. Handoff — TechnicalAgent → ReturnsAgent
+## 10. Handoff — TechnicalAgent - ReturnsAgent
 
 Start with a technical query, then request a return.
 
@@ -125,11 +125,11 @@ Turn 1: My laptop screen is flickering
 Turn 2: I just want to return it, it's not worth fixing
 ```
 
-Expected: Turn 1 → TechnicalAgent, Turn 2 → handoff → triage → ReturnsAgent
+Expected: Turn 1 - TechnicalAgent, Turn 2 - handoff - triage - ReturnsAgent
 
 ---
 
-## 11. Handoff — ReturnsAgent → ActionAgent
+## 11. Handoff — ReturnsAgent - ActionAgent
 
 Return eligibility confirmed, action executed.
 
@@ -138,7 +138,7 @@ Turn 1: I want a refund for my damaged mouse from order ORD-2024-5002
 Turn 2: Yes, please process the refund
 ```
 
-Expected: ReturnsAgent validates → signals ActionAgent → refund processed via MCP
+Expected: ReturnsAgent validates - signals ActionAgent - refund processed via MCP
 
 ---
 
@@ -189,10 +189,3 @@ My order ORD-2024-5002 arrived with a damaged mouse and my laptop from ORD-2024-
 
 Expected: Agent addresses one issue at a time, asks customer which to resolve first
 
----
-
-## Notes
-
-- Clear memory between test sessions: type `clear`
-- Toggle debug: type `debug`
-- Admin orders: ORD-2024-5001 (MacBook, delivered), ORD-2024-5002 (Mouse, damaged), ORD-2024-5003 (SSD, in transit), ORD-2024-5004 (Monitor, delivered)

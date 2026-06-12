@@ -41,7 +41,7 @@ def _normalize(text: str) -> str:
 
     """
     Normalise text to catch character-spacing bypass attempts.
-    e.g. "i g n o r e" → "ignore", "i.g.n.o.r.e" → "ignore"
+    e.g. "i g n o r e" - "ignore", "i.g.n.o.r.e" - "ignore"
     Only collapses spaces/separators between single characters.
     """
     
