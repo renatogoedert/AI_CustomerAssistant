@@ -126,7 +126,7 @@ def general_node(state: OmniaState, general_agent: GeneralAgent) -> OmniaState:
     Handle general information queries. Signals handoff to triage if needed.
     """
 
-    result = general_agent.process(state["query"], history=state.get("history", ""))
+    result = general_agent.process(state["query"], history=state.get("history", ""), debug=state.get("debug", False))
     log = state.get("processing_log", [])
 
     # Handoff detection
@@ -164,7 +164,7 @@ def technical_node(state: OmniaState, technical_agent: TechnicalAgent) -> OmniaS
     Handle technical queries. Signals handoff to triage if needed.
     """
 
-    result = technical_agent.process(state["query"], history=state.get("history", ""))
+    result = technical_agent.process(state["query"], history=state.get("history", ""), debug=state.get("debug", False))
     log = state.get("processing_log", [])
 
     # Handoff detection
@@ -209,7 +209,7 @@ def action_node(state: OmniaState, action_agent: ActionAgent) -> OmniaState:
         query = f"{state['query']} [Action details: {specialist_action}]"
     else:
         query = state["query"]
-    result = action_agent.process(query, username=state["username"], history=state.get("history", ""))
+    result = action_agent.process(query, username=state["username"], history=state.get("history", ""), debug=state.get("debug", False))
 
     # Logging
     log = state.get("processing_log", [])
@@ -234,7 +234,7 @@ def returns_node(state: OmniaState, returns_agent: ReturnsAgent) -> OmniaState:
     Handle return and refund requests.
     """
 
-    result = returns_agent.process(state["query"], username=state["username"], history=state.get("history", ""))
+    result = returns_agent.process(state["query"], username=state["username"], history=state.get("history", ""), debug=state.get("debug", False))
     log = state.get("processing_log", [])
 
     # Handoff detection
@@ -270,7 +270,7 @@ def warranty_node(state: OmniaState, warranty_agent: WarrantyAgent) -> OmniaStat
     Handle warranty claims.
     """
 
-    result = warranty_agent.process(state["query"], username=state["username"], history=state.get("history", ""))
+    result = warranty_agent.process(state["query"], username=state["username"], history=state.get("history", ""), debug=state.get("debug", False))
     log = state.get("processing_log", [])
 
     # Handoff detection
@@ -306,7 +306,7 @@ def delivery_node(state: OmniaState, delivery_agent: DeliveryAgent) -> OmniaStat
     Handle delivery and shipping queries.
     """
 
-    result = delivery_agent.process(state["query"], username=state["username"], history=state.get("history", ""))
+    result = delivery_agent.process(state["query"], username=state["username"], history=state.get("history", ""), debug=state.get("debug", False))
     log = state.get("processing_log", [])
 
     # Handoff detection

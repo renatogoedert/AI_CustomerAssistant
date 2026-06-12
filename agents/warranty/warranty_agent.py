@@ -83,7 +83,7 @@ class WarrantyAgent:
             system_prompt=system_prompt,
         )
 
-    def process(self, query: str, username: str, history: str = "") -> dict:
+    def process(self, query: str, username: str, history: str = "", debug: bool = False) -> dict:
 
         """
         Process a warranty claim request.
@@ -103,6 +103,13 @@ class WarrantyAgent:
         exec_result = self.executor.invoke({
             "messages": [("human", query)]
         })
+
+        # Debug tool calls
+        if debug:
+            for msg in exec_result["messages"]:
+                if hasattr(msg, "tool_calls") and msg.tool_calls:
+                    for call in msg.tool_calls:
+                        print(f"    [GeneralAgent tool] {call.get('name')} → {call.get('args', {})}")
 
         # Check for handoff
         handoff_result = check_for_handoff(exec_result)

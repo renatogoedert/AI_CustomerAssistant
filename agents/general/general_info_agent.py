@@ -78,7 +78,7 @@ class GeneralAgent:
             system_prompt=SYSTEM_PROMPT,
         )
 
-    def process(self, query: str, history: str = "") -> dict:
+    def process(self, query: str, history: str = "", debug: bool = False) -> dict:
 
         """
         Process a general support query using the RAG pipeline.
@@ -100,6 +100,13 @@ class GeneralAgent:
         exec_result = self.executor.invoke({
             "messages": [("human", query)]
         })
+
+        # Debug tool calls
+        if debug:
+            for msg in exec_result["messages"]:
+                if hasattr(msg, "tool_calls") and msg.tool_calls:
+                    for call in msg.tool_calls:
+                        print(f"    [GeneralAgent tool] {call.get('name')} → {call.get('args', {})}")
  
         # Check for handoff
         handoff_result = check_for_handoff(exec_result)
