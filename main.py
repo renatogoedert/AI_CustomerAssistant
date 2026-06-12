@@ -23,10 +23,16 @@ SHARED_PASSWORD = "123456"
 ADMIN_NAME      = "admin"
 MEMORY_DIR      = Path("./memory")
 MEMORY_DIR.mkdir(exist_ok=True)
+LOGS_DIR        = Path("./logs")
+LOGS_DIR.mkdir(exist_ok=True)
 
 # Code based on Class 10 section 4 Lab
 def load_memory(name: str) -> dict:
-    """Load memory for a user by name."""
+
+    """
+    Load memory for a user by name.
+    """
+
     memory_file = MEMORY_DIR / f"{name.lower()}.json"
     if memory_file.exists():
         return json.loads(memory_file.read_text(encoding="utf-8"))
@@ -41,13 +47,21 @@ def load_memory(name: str) -> dict:
 
 # Code based on Class 10 section 4 Lab
 def save_memory(name: str, memory: dict):
-    """Save memory for a user by name."""
+
+    """
+    Save memory for a user by name.
+    """
+
     memory_file = MEMORY_DIR / f"{name.lower()}.json"
     memory_file.write_text(json.dumps(memory, indent=2, ensure_ascii=False), encoding="utf-8")
 
 # Code based on Class 10 section 4 Lab
 def update_memory(memory: dict, role: str, content: str):
-    """Append a message to the memory history."""
+
+    """
+    Append a message to the memory history.
+    """
+
     memory["history"].append({
         "role": role,
         "content": content,
@@ -57,7 +71,11 @@ def update_memory(memory: dict, role: str, content: str):
 
 
 def _build_state(query: str, name: str, history_str: str, debug: bool, memory: dict) -> dict:
-    """Build a fresh LangGraph state dict."""
+
+    """
+    Build LangGraph state dict.
+    """
+
     return {
         "query":            query,
         "username":         name,
@@ -81,7 +99,11 @@ def _build_state(query: str, name: str, history_str: str, debug: bool, memory: d
 
 # Login
 def login() -> tuple[str, bool]:
-    """Simple login — name + shared password. Admin enables debug mode."""
+
+    """
+    Simple login — name + shared password. Admin enables debug mode.
+    """
+
     print("\n" + "=" * 50)
     print("  Omnia Retail — Customer Support")
     print("=" * 50)
@@ -102,7 +124,11 @@ def login() -> tuple[str, bool]:
 
 # Setup
 def setup(username: str, debug: bool = False):
-    """Load dataset, build vectorstore, initialise agents and workflow."""
+
+    """
+    Load dataset, build vectorstore, initialise agents and workflow.
+    """
+
     debug and print("\n  [System] Loading knowledge base...")
 
     dataset_path = os.path.join(os.path.dirname(__file__), "rag", "dataset", "omnia_retail_knowledge_base.json")
@@ -160,17 +186,35 @@ def setup(username: str, debug: bool = False):
 def _process_query(query: str, name: str, history_str: str, debug: bool,
                    memory: dict, workflow) -> tuple[str, dict]:
     
-    """Run a single query through the workflow. Returns (response, result)."""
+    """
+    Run a single query through the workflow. 
+    """
 
     state = _build_state(query, name, history_str, debug, memory)
     result = workflow.invoke(state)
     return result["response"], result
 
+def log_interaction(name: str, query: str, result: dict, debug: bool = False):
+
+    """
+    Append interaction to the session log file.
+    """
+
+    log_file = LOGS_DIR / f"{name.lower()}.log"
+    with open(log_file, "a", encoding="utf-8") as f:
+        f.write(f"[{datetime.now().isoformat()}]\n")
+        f.write(f"Query:    {query}\n")
+        f.write(f"Response: {result.get('response', '')[:200]}\n")
+        f.write(f"Agent:    {result.get('current_agent', '')}\n")
+        f.write(f"Log:      {result.get('processing_log', [])}\n")
+        f.write("\n")
 
 # Chat loop
 def run_session(name: str, is_admin: bool, workflow, triage: TriageAgent):
 
-    """Run the main chat loop for a logged-in user."""
+    """
+    Run the main chat loop for a logged-in user.
+    """
 
     memory = load_memory(name)
     memory["current_agent"] = ""
@@ -253,6 +297,8 @@ def run_session(name: str, is_admin: bool, workflow, triage: TriageAgent):
         print(f"\nAssistant: {response}\n")
 
         debug and print(f"  [Log] {result.get('processing_log', [])}\n")
+
+        log_interaction(name, query, result, debug)
 
         # Update memory 
         update_memory(memory, "user", query)
