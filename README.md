@@ -45,7 +45,6 @@ sequenceDiagram
     participant triage as Triage node
     participant agent as Specialist agent
     participant llm as OpenAI LLM
-    participant mcp as MCP server
 
     User->>main: types query
     main->>decomp: decompose(query)
@@ -80,23 +79,16 @@ flowchart TD
 
     T[Triage agent\nclassify · rewrite · decompose]
 
-    T -->|general / bulk| G[General agent\nRAG + HyDE]
-    T -->|technical| TE[Technical agent\nRAG + HyDE + web search]
-    T -->|returns| R[Returns agent\npolicy_001]
-    T -->|warranty| W[Warranty agent\npolicy_002]
-    T -->|delivery| D[Delivery agent\npolicy_003]
-    T -->|loop detected| E[Escalation]
-
-    G -->|handoff| T
-    TE -->|handoff| T
+    T <--> G[General agent\nRAG + HyDE]
+    T <--> TE[Technical agent\nRAG + HyDE + web search]
+    T <--> R[Returns agent\npolicy_001]
+    T <--> W[Warranty agent\npolicy_002]
+    T <--> D[Delivery agent\npolicy_003]
+    T <-->|loop detected| E[Escalation]
 
     R -->|ready_for_action| A
     W -->|ready_for_action| A
     D -->|ready_for_action| A
-
-    R -->|handoff| T
-    W -->|handoff| T
-    D -->|handoff| T
 
     A[Action agent\nMCP — orders · refunds · inventory]
 
