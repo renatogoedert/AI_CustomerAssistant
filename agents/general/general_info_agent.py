@@ -138,9 +138,17 @@ class GeneralAgent:
         if handoff_result:
             return {**handoff_result, "safe": True}
         
-        # HyDE
-        hypothesis = self._generate_hypothesis(query)
-        retrieved = self.retriever.retrieve(hypothesis)
+        # RAG 
+        retrieved = self.retriever.retrieve(query)
+        top_score = float(retrieved[0].metadata.get("retrieval_score", 0)) if retrieved else 0.0
+ 
+        # HyDE 
+        if not retrieved or top_score < 1.5:
+            hypothesis = self._generate_hypothesis(query)
+            debug and print(f"  [GeneralAgent] HyDE triggered (score={top_score:.2f}) → {hypothesis[:80]}...")
+            hyde_retrieved = self.retriever.retrieve(hypothesis)
+            if hyde_retrieved:
+                retrieved = hyde_retrieved
 
         if not retrieved:
             return {
