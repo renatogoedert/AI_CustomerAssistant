@@ -117,7 +117,6 @@ def classify_query(query: str) -> dict:
 
     """
     Classify a customer support query into a category and urgency level.
-    Uses fast keyword matching first, falls back to LLM for ambiguous queries.
     Returns {"category": str, "urgency": str, "reason": str, "method": str}.
     """
 

@@ -72,7 +72,13 @@ def triage_node(state: OmniaState, triage_agent: TriageAgent) -> OmniaState:
 
     # Handoff
     handoff_context = f" [Handoff reason: {state.get('handoff_reason')}]" if needs_handoff else ""
-    result = triage_agent.process(state["query"] + handoff_context)
+    result = triage_agent.process(state["query"] + handoff_context, debug=state.get("debug", False))
+
+    # Extract rewritten
+    rewritten_query = result.get("rewritten_query")
+    if rewritten_query and state.get("debug"):
+        print(f"  [Triage] Query rewritten → {rewritten_query}")
+
     route  = result.get("route_to", "GeneralAgent")
 
     # Loop detection
@@ -95,12 +101,15 @@ def triage_node(state: OmniaState, triage_agent: TriageAgent) -> OmniaState:
                f"route={route} method={result.get('method', 'N/A')}"
                + (f" [handoff from {current_agent}]" if needs_handoff else ""))
 
+    # Debugging
     if state.get("debug"):
         print(f"  [Triage] category={result.get('category')} urgency={result.get('urgency')} "
               f"route={route} method={result.get('method', 'N/A')}"
               + (f" [handoff from {current_agent}]" if needs_handoff else ""))
 
+    # State Return
     return {
+        "query":         rewritten_query if rewritten_query else state["query"],
         "category":      result.get("category", "general"),
         "urgency":       result.get("urgency", "low"),
         "route_to":      route,

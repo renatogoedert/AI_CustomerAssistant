@@ -3,67 +3,27 @@
   "history": [
     {
       "role": "user",
-      "content": "Where is my order ORD-2024-5003?",
-      "timestamp": "2026-06-12T00:08:33.128271"
+      "content": "apple sansung",
+      "timestamp": "2026-06-12T14:56:10.437320"
     },
     {
       "role": "assistant",
-      "content": "Could you please provide the username associated with the order ORD-2024-5003? This is to verify that it matches your logged-in username before I check the order status.\n\nI also noticed you had another issue. Let me help you with that next.",
-      "timestamp": "2026-06-12T00:08:33.128282"
+      "content": "Hello! It looks like you mentioned \"apple sansung.\" Could you please clarify your question or let me know how I can assist you with Apple or Samsung products?",
+      "timestamp": "2026-06-12T14:56:10.437328"
     },
     {
       "role": "user",
-      "content": "What is the opening hours?",
-      "timestamp": "2026-06-12T00:08:41.356350"
+      "content": "apple sansung",
+      "timestamp": "2026-06-12T14:58:27.853597"
     },
     {
       "role": "assistant",
-      "content": "Omnia Retail Warehouse is located at Park West Business Campus, Dublin 12. The opening hours are Monday to Friday, from 09:00 to 17:30.",
-      "timestamp": "2026-06-12T00:08:41.356359"
-    },
-    {
-      "role": "user",
-      "content": "the username is admin",
-      "timestamp": "2026-06-12T00:09:11.119511"
-    },
-    {
-      "role": "assistant",
-      "content": "I’m sorry, but I don’t have information about order ORD-2024-5003 in the documentation provided. Could you please confirm the order number or provide any additional details? Alternatively, you may contact Omnia Retail customer support directly for order status updates.",
-      "timestamp": "2026-06-12T00:09:11.119527"
-    },
-    {
-      "role": "user",
-      "content": "wuit",
-      "timestamp": "2026-06-12T00:13:56.648893"
-    },
-    {
-      "role": "assistant",
-      "content": "I couldn't find relevant information for your query in our documentation. Please contact our support team directly at support@omniaretail.ie or call 01-XXX-XXXX.",
-      "timestamp": "2026-06-12T00:13:56.648903"
-    },
-    {
-      "role": "user",
-      "content": "Where is my order ORD-2024-5003?",
-      "timestamp": "2026-06-12T00:18:01.594137"
-    },
-    {
-      "role": "assistant",
-      "content": "I am currently unable to access the order status system due to a server connection issue. Please contact Omnia Retail customer support directly at support@omniaretail.ie for assistance with your order ORD-2024-5003.\n\nI also noticed you mentioned another issue: \"What is the opening hours?\". Would you like me to help with that now?",
-      "timestamp": "2026-06-12T00:18:01.594167"
-    },
-    {
-      "role": "user",
-      "content": "What is the opening hours?",
-      "timestamp": "2026-06-12T00:18:20.455671"
-    },
-    {
-      "role": "assistant",
-      "content": "Omnia Retail Warehouse is open Monday to Friday, from 09:00 to 17:30.",
-      "timestamp": "2026-06-12T00:18:20.455681"
+      "content": "Certainly! Here's an overview comparing Apple and Samsung smartphones based on features, specifications, and differences:\n\n**1. Operating System:**\n- Apple iPhones run iOS, known for its smooth integration, security, and consistent updates.\n- Samsung smartphones run Android (with Samsung’s One UI skin), offering more customization and flexibility.\n\n**2. Performance:**\n- Apple uses its own A-series or M-series chips (e.g., A16 Bionic), which are highly optimized for iOS and deliver excellent performance and efficiency.\n- Samsung uses Qualcomm Snapdragon or its own Exynos processors depending on the region, which offer strong performance but generally lag slightly behind Apple’s chips in raw benchmarks.\n\n**3. Ecosystem Integration:**\n- Apple devices work seamlessly together (iPhone, iPad, Mac, Apple Watch) with features like Handoff, AirDrop, Universal Clipboard, and iMessage.\n- Samsung integrates well with other Samsung devices (Galaxy tablets, watches, earbuds) and supports Android ecosystem features like Google services and Microsoft integration.\n\n**4. Display:**\n- Samsung is known for its vibrant AMOLED displays with high refresh rates (up to 120Hz or more), often offering higher resolution and more vivid colors.\n- Apple uses Super Retina OLED displays with excellent color accuracy and True Tone technology but typically capped at 60Hz or 120Hz on Pro models.\n\n**5. Camera:**\n- Both brands offer advanced camera systems. Apple focuses on natural color reproduction and video capabilities (e.g., Cinematic mode).\n- Samsung often includes more versatile hardware (periscope zoom, higher megapixels) and extensive camera modes.\n\n**6. Battery Life and Charging:**\n- Samsung phones often have larger batteries and support faster wired and wireless charging.\n- Apple focuses on battery optimization through hardware-software integration, with decent battery life and MagSafe wireless charging.\n\n**7. Hardware Flexibility:**\n- Samsung offers a wider range of models with various sizes, foldable designs, expandable storage (microSD on some models), and headphone jacks on some devices.\n- Apple offers fewer models but emphasizes premium build quality and uniform design.\n\n**8. Software Updates:**\n- Apple provides longer and more consistent software updates (typically 5+ years).\n- Samsung has improved significantly, offering up to 4 years of major Android updates on many devices.\n\nIf you have specific models in mind or particular features you want to compare, please let me know!",
+      "timestamp": "2026-06-12T14:58:27.853629"
     }
   ],
   "created_at": "2026-06-09T23:00:01.227066",
-  "last_seen": "2026-06-12T00:18:20.455682",
+  "last_seen": "2026-06-12T14:58:27.853632",
   "current_agent": "GeneralAgent",
   "pending_queries": [],
   "awaiting_next_issue": false

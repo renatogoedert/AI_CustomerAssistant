@@ -103,7 +103,7 @@ def login() -> tuple[str, bool]:
 # Setup
 def setup(username: str, debug: bool = False):
     """Load dataset, build vectorstore, initialise agents and workflow."""
-    debug and print("\nLoading knowledge base...")
+    debug and print("\n  [System] Loading knowledge base...")
 
     dataset_path = os.path.join(os.path.dirname(__file__), "rag", "dataset", "omnia_retail_knowledge_base.json")
     with open(dataset_path, encoding="utf-8") as f:
@@ -113,7 +113,7 @@ def setup(username: str, debug: bool = False):
     persist_dir = os.path.join(os.path.dirname(__file__), "rag", "chroma_db")
 
     if os.path.exists(persist_dir):
-        debug and print("Loading existing vector database...")
+        debug and print("  [System] Loading existing vector database...")
         vectorstore = Chroma(
             collection_name="omnia_retail",
             embedding_function=embeddings,
@@ -140,8 +140,8 @@ def setup(username: str, debug: bool = False):
             persist_directory=persist_dir,
         )
 
-    debug and print(f"Loaded {len(documents)} documents")
-    debug and print("Initialising agents...")
+    debug and print(f"  [System] Loaded {len(documents)} documents")
+    debug and print("  [System] Initialising agents...")
 
     triage   = TriageAgent()
     general  = GeneralAgent(documents=documents, vectorstore=vectorstore)
@@ -153,7 +153,7 @@ def setup(username: str, debug: bool = False):
 
     workflow = build_workflow(triage, general, technical, action, returns, warranty, delivery)
 
-    debug and print("Agents and workflow ready\n")
+    debug and print("  [System] Agents and workflow ready\n")
     return workflow, triage
 
 
