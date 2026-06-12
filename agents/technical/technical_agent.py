@@ -124,7 +124,7 @@ class TechnicalAgent:
             for msg in exec_result["messages"]:
                 if hasattr(msg, "tool_calls") and msg.tool_calls:
                     for call in msg.tool_calls:
-                        print(f"    [GeneralAgent tool] {call.get('name')} → {call.get('args', {})}")
+                        print(f"    [TechnicalAgent tool] {call.get('name')} - {call.get('args', {})}")
  
         # Check for handoff
         handoff_result = check_for_handoff(exec_result)

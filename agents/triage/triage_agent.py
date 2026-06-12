@@ -168,7 +168,7 @@ class TriageAgent:
             for msg in result["messages"]:
                 if hasattr(msg, "tool_calls") and msg.tool_calls:
                     for call in msg.tool_calls:
-                        print(f"    [Triage tool] {call.get('name')} → {call.get('args', {})}")
+                        print(f"    [TriageAgent tool] {call.get('name')} - {call.get('args', {})}")
 
         # Check rewrite_query
         rewritten_query = None

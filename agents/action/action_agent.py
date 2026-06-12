@@ -50,7 +50,6 @@ def _build_mcp_tools(username: str):
 
     """
     Build LangChain tools that call the MCP server.
-    Username is bound at creation time so agents always use the logged-in user.
     """
 
     # Based on Code for Lab 9
@@ -59,9 +58,6 @@ def _build_mcp_tools(username: str):
 
         """
         Check the status of a customer order.
-        Args:
-            order_id: The order ID in format ORD-YYYY-XXXX
-        Returns order details including status, items, and dates.
         """
 
         async def _call():
@@ -84,10 +80,6 @@ def _build_mcp_tools(username: str):
 
         """
         Process a refund request for a delivered order.
-        Args:
-            order_id: The order ID in format ORD-YYYY-XXXX
-            reason: The reason for the refund request
-        Returns refund confirmation with refund ID.
         """
 
         async def _call():
@@ -109,9 +101,6 @@ def _build_mcp_tools(username: str):
 
         """
         Check inventory levels for a product.
-        Args:
-            product_name: Full or partial product name to search for
-        Returns stock levels, price and availability.
         """
 
         async def _call():
@@ -123,7 +112,6 @@ def _build_mcp_tools(username: str):
                     )
                     return str(result)
             except Exception as e:
-                print(f"  [MCP Error] {str(e)}") 
                 return f"Error connecting to backend: {str(e)}. Please contact support@omniaretail.ie"
 
         return asyncio.run(_call())
@@ -136,14 +124,13 @@ class ActionAgent:
     """
     Action agent — executes backend operations for customer support.
     Connects to the Omnia Retail MCP server for order, refund and inventory operations.
-    Username is bound at init time to ensure correct user context.
     """
 
     def __init__(self, username: str):
         self.username = username
         self.llm = get_llm(temperature=0)
         self.mcp_tools = _build_mcp_tools(username)
-        self.tools = [is_safe] + self.mcp_tools
+        self.tools = [is_safe, handoff] + self.mcp_tools
 
         self.executor = create_agent(
             model=self.llm,
@@ -151,11 +138,10 @@ class ActionAgent:
             system_prompt=SYSTEM_PROMPT,
         )
 
-    def process(self, query: str,username: str = "", history: str = "") -> dict:
+    def process(self, query: str,username: str = "", history: str = "", debug: bool = False) -> dict:
 
         """
-        Process an action request — order status, refund, or inventory check.
-        Returns {"safe": bool, "response": str, "actions_taken": list}.
+        Process an action request, order status, refund, or inventory check.
         """
 
         # Safety check
@@ -175,24 +161,22 @@ class ActionAgent:
         if history:
             full_query = f"Conversation so far:\n{history}\n\nCustomer: {query}\nNote: username is '{active_username}'."
 
-        # Run agent — checks if handoff is needed
+        # Run agent
         exec_result = self.executor.invoke({
             "messages": [("human", query)]
         })
+
+        # Debug tool calls
+        if debug:
+            for msg in exec_result["messages"]:
+                if hasattr(msg, "tool_calls") and msg.tool_calls:
+                    for call in msg.tool_calls:
+                        print(f"    [ActionAgent tool] {call.get('name')} - {call.get('args', {})}")
  
         # Check for handoff
         handoff_result = check_for_handoff(exec_result)
         if handoff_result:
             return {**handoff_result, "safe": True}
-
-        # Build message with history context
-        full_query = f"{query}\n\nNote: The logged-in customer username is '{self.username}'."
-        if history:
-            full_query = f"Conversation so far:\n{history}\n\nCustomer: {query}\nNote: username is '{self.username}'."
-
-        result = self.executor.invoke({
-            "messages": [("human", full_query)]
-        })
 
         # Extract tool calls made
         actions_taken = [
@@ -203,7 +187,7 @@ class ActionAgent:
             if call.get("name") not in ("handoff", "is_safe")
         ]
 
-        response = result["messages"][-1].content
+        response = exec_result["messages"][-1].content
 
         return {
             "safe": True,
