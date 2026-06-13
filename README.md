@@ -197,38 +197,38 @@ flowchart TD
    - Synthesise comprehensive response - [~]
 
         - [Triage Agent](./agents/triage/triage_agent.py)
-```
-class TriageAgent:
+        ```
+        class TriageAgent:
 
-    .
-    .
-    .
+            .
+            .
+            .
 
-    def decompose(self, query: str) -> dict:
+            def decompose(self, query: str) -> dict:
 
-        """
-        Check if query is complex and decompose into sub-queries.
-        Returns {"complex": bool, "sub_queries": list}.
-        """
+                """
+                Check if query is complex and decompose into sub-queries.
+                Returns {"complex": bool, "sub_queries": list}.
+                """
+                
+                prompt = f"{DECOMPOSE_PROMPT}\n\nInput: {query}\nOutput:"
+                response = self.llm.invoke(prompt)
         
-        prompt = f"{DECOMPOSE_PROMPT}\n\nInput: {query}\nOutput:"
-        response = self.llm.invoke(prompt)
- 
-        try:
-            json_match = re.search(r'\{.*\}', response.content, re.DOTALL)
-            if json_match:
-                result = json.loads(json_match.group())
-                # Add route_to to each sub-query
-                for sq in result.get("sub_queries", []):
-                    sq["route_to"] = ROUTING.get(sq.get("category"), "GeneralAgent")
-                return result
-        except Exception:
-            pass
- 
-        return {"complex": False, "sub_queries": []}
-```
+                try:
+                    json_match = re.search(r'\{.*\}', response.content, re.DOTALL)
+                    if json_match:
+                        result = json.loads(json_match.group())
+                        # Add route_to to each sub-query
+                        for sq in result.get("sub_queries", []):
+                            sq["route_to"] = ROUTING.get(sq.get("category"), "GeneralAgent")
+                        return result
+                except Exception:
+                    pass
+        
+                return {"complex": False, "sub_queries": []}
+        ```
 
-        - [Main](./main.py)
+- [Main](./main.py)
 
 ```
        while True:
