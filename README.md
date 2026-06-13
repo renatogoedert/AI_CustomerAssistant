@@ -196,7 +196,7 @@ flowchart TD
    - Execute multiple retrieval operations - [x]
    - Synthesise comprehensive response - [~]
 
-- [triage_agent.py](./agents/triage/triage_agent.py)
+- [Triage Agent](./agents/triage/triage_agent.py)
 ```
 class TriageAgent:
 
@@ -227,7 +227,7 @@ class TriageAgent:
  
         return {"complex": False, "sub_queries": []}
 ```
-- [Main.py](./main.py)
+- [Main](./main.py)
 ```
        while True:
         # Check for pending sub-queries
@@ -277,9 +277,9 @@ class TriageAgent:
    - At least 1 API connected - [x]
    - MCP used - [x]
 
-[Mock mcp](./mock_data/mcp_server.py)
-[Mock api](./mock_data/mock_api.py)
-[Action Agent](./agents/action/action_agent.py)
+- [Mock mcp](./mock_data/mcp_server.py)
+- [Mock api](./mock_data/mock_api.py)
+- [Action Agent](./agents/action/action_agent.py)
 
 4. **Advanced Retrieval Strategies: Implement at least 2 advanced techniques**
    - Query expansion/rewriting - []
