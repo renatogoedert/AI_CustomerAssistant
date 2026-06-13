@@ -18,9 +18,8 @@ Github Repo URL:  Please provide the github repo URL for THIS repo as sometimes 
 Prerequisites:
 
 - Your .env file configured with EMBEDDINGS_PROVIDER, EMBEDDINGS_MODEL, and OPENAI_API_KEY 
-(The current codebase was just tested with Local models, cloud services wasnt tested)
+(The current codebase need the OpenAI API)
 - Python 3.11+ environment with required libraries
-- OPENAI_API_KEY
 
 Clone the repository.
 
@@ -197,7 +196,7 @@ flowchart TD
    - Execute multiple retrieval operations - [x]
    - Synthesise comprehensive response - [~]
 
-- Triage Agent
+- [triage_agent.py](./agents/triage/triage_agent.py)
 ```
 class TriageAgent:
 
@@ -228,7 +227,7 @@ class TriageAgent:
  
         return {"complex": False, "sub_queries": []}
 ```
-- main.py
+- [Main.py](./main.py)
 ```
        while True:
         # Check for pending sub-queries
@@ -275,8 +274,12 @@ class TriageAgent:
 ```
 
 3. **Tool Integration: Connect to simulated backend systems (you'll provide mock APIs)**
-   - At least 1 API connected - []
-   - MCP used - []
+   - At least 1 API connected - [x]
+   - MCP used - [x]
+
+[Mock mcp](./mock_data/mcp_server.py)
+[Mock api](./mock_data/mock_api.py)
+[Action Agent](./agents/action/action_agent.py)
 
 4. **Advanced Retrieval Strategies: Implement at least 2 advanced techniques**
    - Query expansion/rewriting - []
