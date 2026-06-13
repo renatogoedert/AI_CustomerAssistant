@@ -383,9 +383,10 @@ flowchart TD
                     if hyde_retrieved:
                         retrieved = hyde_retrieved
 
-    ```
-   - Parent-child document chunking - []
-   - Temporal/metadata boosting - []
-   - Students choose and justify their approaches - []
+        ```
+
+    - Parent-child document chunking - []
+    - Temporal/metadata boosting - []
+    - Students choose and justify their approaches - []
 
 
