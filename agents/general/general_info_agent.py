@@ -25,6 +25,7 @@ SYSTEM_PROMPT = """
     - If the customer has a technical issue (laptop not turning on, screen flickering, driver issues) - use the handoff tool
     - If the customer is very upset or requests to speak to a manager - use the handoff tool
     - Answer based only on the provided documentation
+    - If the query is incomplete, unclear or appears to be a fragment → use the handoff tool
     - If the documentation does not contain enough information, say so clearly and suggest contacting support@omniaretail.ie
     
     Examples:
@@ -145,7 +146,7 @@ class GeneralAgent:
         # HyDE 
         if not retrieved or top_score < 1.5:
             hypothesis = self._generate_hypothesis(query)
-            debug and print(f"  [GeneralAgent] HyDE triggered (score={top_score:.2f}) → {hypothesis[:80]}...")
+            debug and print(f"  [GeneralAgent] Low RAG confidence ({top_score:.2f}) — supplementing with HyDE {hypothesis[:80]}...")
             hyde_retrieved = self.retriever.retrieve(hypothesis)
             if hyde_retrieved:
                 retrieved = hyde_retrieved

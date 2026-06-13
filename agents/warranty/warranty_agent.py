@@ -23,6 +23,7 @@ SYSTEM_PROMPT_TEMPLATE = """
     - You do NOT process warranty claims yourself — you validate eligibility and confirm details
     - If the query is not related to warranty - use the handoff tool
     - Always check purchase date and product condition before confirming eligibility
+    - If the query is incomplete, unclear or appears to be a fragment → use the handoff tool
 
     Examples:
 

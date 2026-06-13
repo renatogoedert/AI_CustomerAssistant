@@ -70,9 +70,31 @@
       "role": "assistant",
       "content": "I couldn't find relevant information for your query in our documentation. Please contact our support team directly at support@omniaretail.ie or call 01-XXX-XXXX.",
       "timestamp": "2026-06-11T15:17:02.856872"
+    },
+    {
+      "role": "user",
+      "content": "How do I install an NVMe SSD on my laptop?",
+      "timestamp": "2026-06-13T14:30:01.887772"
+    },
+    {
+      "role": "assistant",
+      "content": "Hello! I can help you with installing an NVMe SSD in your laptop. Here’s a clear, step-by-step guide to do it safely:\n\n---\n\n### How to Install an NVMe SSD in Your Laptop\n\n**Before you start:**\n- Make sure your laptop supports NVMe SSDs (check your laptop’s manual or model specs).\n- Have a compatible NVMe M.2 SSD (e.g., Crucial P3 Plus 1TB).\n- Gather a small Phillips screwdriver and an anti-static wrist strap if possible.\n- Backup your data if you plan to replace your existing drive.\n\n---\n\n### Step 1: Prepare Your Workspace\n- Power off your laptop completely.\n- Disconnect the charger and any peripherals.\n- Work on a clean, flat surface.\n- Ground yourself to avoid static damage (touch a metal object or wear an anti-static wrist strap).\n\n---\n\n### Step 2: Open Your Laptop\n- Remove the screws securing the laptop’s bottom cover.\n- Carefully pry open the base using a plastic opening tool or fingernail to avoid damage.\n- Set the cover and screws aside safely.\n\n---\n\n### Step 3: Locate the M.2 Slot\n- Look for the M.2 slot on the motherboard. It’s a small slot usually near the center or side of the board.\n- If your laptop already has an M.2 SSD installed (like in ASUS VivoBook 15 X1500EA-BQ1177W), you will see a drive occupying the slot.\n\n---\n\n### Step 4: Decide on Installation Type\n- **If the M.2 slot is empty:**  \n  - You can install your new NVMe SSD directly.\n- **If the M.2 slot is occupied:**  \n  - You can either replace the existing drive (requires cloning your data first) or use your new SSD as an external drive via a USB enclosure.\n\n---\n\n### Step 5: Install the NVMe SSD\n- If installing internally:\n  1. Remove the screw holding the existing M.2 SSD (if replacing).\n  2. Gently pull out the existing drive.\n  3. Insert the new NVMe SSD at a 30-degree angle into the M.2 slot.\n  4. Press it down gently and secure it with the screw.\n- If using an external enclosure:\n  1. Insert the NVMe SSD into the enclosure as per the enclosure’s instructions.\n  2. Connect the enclosure to your laptop via USB.\n\n---\n\n### Step 6: Close Your Laptop\n- Replace the bottom cover.\n- Screw it back securely.\n- Reconnect power and peripherals.\n\n---\n\n### Step 7: Power On and Configure\n- Power on your laptop.\n- If you replaced the internal drive, you may need to clone your old drive or reinstall your OS.\n- If using external enclosure, your laptop should detect the new drive as an external storage device.\n\n---\n\n### Additional Tips:\n- For cloning your existing drive, we recommend **Macrium Reflect Free**.\n- If unsure about opening your laptop or cloning, using an external enclosure is safer and easier.\n- Always check your laptop’s manual or Omnia Retail support if you’re uncertain.\n\n---\n\nIf you tell me your laptop model, I can provide more specific guidance or check if your laptop supports NVMe SSDs internally.\n\nLet me know if you want help with cloning software or choosing an external enclosure!",
+      "timestamp": "2026-06-13T14:30:01.887791"
+    },
+    {
+      "role": "user",
+      "content": "— supplementing with",
+      "timestamp": "2026-06-13T14:32:32.129826"
+    },
+    {
+      "role": "assistant",
+      "content": "It looks like you mentioned \"supplementing with\" — could you please clarify what you need help with? Are you asking about supplementing your laptop storage, battery care, or something else related to your device or Omnia Retail services? \n\nFeel free to provide more details so I can assist you better!",
+      "timestamp": "2026-06-13T14:32:32.129844"
     }
   ],
   "created_at": "2026-06-10T16:49:18.837004",
-  "last_seen": "2026-06-11T15:17:02.856873",
-  "current_agent": "GeneralAgent"
+  "last_seen": "2026-06-13T14:32:32.129847",
+  "current_agent": "TechnicalAgent",
+  "pending_queries": [],
+  "awaiting_next_issue": false
 }

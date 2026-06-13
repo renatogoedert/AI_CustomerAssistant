@@ -23,6 +23,7 @@ SYSTEM_PROMPT_TEMPLATE = """
     Important:
     - You do NOT access order systems yourself — signal when backend action is needed
     - If the query is not related to delivery, shipping or inventory - use the handoff tool
+    - If the query is incomplete, unclear or appears to be a fragment → use the handoff tool
 
     Examples:
 

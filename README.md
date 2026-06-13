@@ -390,3 +390,6 @@ flowchart TD
     - Students choose and justify their approaches - []
 
 
+Hyde is a technique to improve Rag retrieval results, so because of that was added in both Technichal and general agent. However,when tested the results we not favorable, maybe for the fact that the rag was contructed in a way to favor the right results, so for the general agent hyde would be just used if the top score falls bellow a certain thresehold, on the technical agent, it already have Web search sup[lement, so for that Hyde would be the normal run, as it base parameters already should contain heigh level of technichal knowledge
+
+]

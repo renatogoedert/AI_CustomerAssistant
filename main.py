@@ -1,10 +1,12 @@
 import json
+import re
 import os
 import getpass
 from pathlib import Path
 from datetime import datetime
 
 from langchain_community.vectorstores import Chroma
+from rank_bm25 import BM25Okapi
 import warnings
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -209,6 +211,48 @@ def log_interaction(name: str, query: str, result: dict, debug: bool = False):
         f.write(f"Log:      {result.get('processing_log', [])}\n")
         f.write("\n")
 
+# Based on Code for Class 07, Section 2
+def _tokenize(text: str) -> list[str]:
+    return re.findall(r"[a-z0-9]+", text.lower())
+ 
+ 
+# Based on temporal/metadata boosting pattern from HybridRetriever (Assignment 1).
+def build_history(memory: dict, query: str, max_messages: int = 10) -> str:
+    
+    """
+    Build conversation history string using BM25 relevance + recency boosting.
+    """
+ 
+    history = memory.get("history", [])
+    if not history:
+        return ""
+ 
+    recent = history[-20:]
+    if not recent:
+        return ""
+ 
+    # BM25 scoring 
+    tokenized = [_tokenize(msg["content"]) for msg in recent]
+    bm25 = BM25Okapi(tokenized)
+    bm25_scores = bm25.get_scores(_tokenize(query))
+ 
+    # Temporal boost
+    n = len(recent)
+    scored = []
+    for i, (msg, bm25_score) in enumerate(zip(recent, bm25_scores)):
+        recency = (i + 1) / n
+        combined = float(bm25_score) + recency
+        scored.append((combined, i, msg))
+ 
+    # Select top messages
+    scored.sort(key=lambda x: x[0], reverse=True)
+    selected = sorted(scored[:max_messages], key=lambda x: x[1])
+ 
+    return "\n".join(
+        f"{'Customer' if m['role'] == 'user' else 'Assistant'}: {m['content']}"
+        for _, _, m in selected
+    )
+
 # Chat loop
 def run_session(name: str, is_admin: bool, workflow, triage: TriageAgent):
 
@@ -222,10 +266,7 @@ def run_session(name: str, is_admin: bool, workflow, triage: TriageAgent):
     memory.setdefault("awaiting_next_issue", False)
     debug = is_admin
 
-    history_str = "\n".join(
-        f"{'Customer' if m['role'] == 'user' else 'Assistant'}: {m['content']}"
-        for m in memory["history"][-10:]
-    ) if memory["history"] else ""
+    history_str = build_history(memory, "", max_messages=10)
 
     returning = len(memory["history"]) > 0
     greeting  = f"Welcome back, {name}!" if returning else f"Hello, {name}! How can I help you today?"
@@ -303,10 +344,7 @@ def run_session(name: str, is_admin: bool, workflow, triage: TriageAgent):
         # Update memory 
         update_memory(memory, "user", query)
         update_memory(memory, "assistant", response)
-        history_str = "\n".join(
-            f"{'Customer' if m['role'] == 'user' else 'Assistant'}: {m['content']}"
-            for m in memory["history"][-10:]
-        )
+        history_str = build_history(memory, query, max_messages=10)
         save_memory(name, memory)
 
 

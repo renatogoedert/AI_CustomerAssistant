@@ -22,6 +22,7 @@ SYSTEM_PROMPT_TEMPLATE = """
     Important:
     - You do NOT process returns yourself — you validate eligibility and confirm details
     - If the query is not related to returns/refund - use the handoff tool
+    - If the query is incomplete, unclear or appears to be a fragment → use the handoff tool
 
     Examples:
 

@@ -29,6 +29,7 @@ SYSTEM_PROMPT = """
     - If the customer asks to process a refund, check order status or perform any non-technical action,
     use the handoff tool with the reason
     - If the customer is very upset or requests escalation, use the handoff tool
+    - If the query is incomplete, unclear or appears to be a fragment → use the handoff tool
     - If the issue cannot be resolved remotely, advise the customer to contact support@omniaretail.ie
     
     Examples:
@@ -164,13 +165,13 @@ class TechnicalAgent:
         top_score = 0.0
 
         if not retrieved or not rag_context:
-            print(f"  [TechnicalAgent] RAG empty — using web search")
+            debug and print(f"  [TechnicalAgent] RAG empty — using web search")
             search_results = self._search_web(query)
             used_web_search = True
         else:
             top_score = float(retrieved[0].metadata.get("retrieval_score", 0))
             if top_score < 1.8:
-                print(f"  [TechnicalAgent] Low RAG confidence ({top_score}) — supplementing with web search")
+                debug and print(f"  [TechnicalAgent] Low RAG confidence ({top_score}) — supplementing with web search")
                 search_results = self._search_web(query)
                 used_web_search = True
 
