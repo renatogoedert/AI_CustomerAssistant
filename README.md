@@ -228,52 +228,52 @@ flowchart TD
                 return {"complex": False, "sub_queries": []}
         ```
 
-- [Main](./main.py)
+        - [Main](./main.py)
 
-```
-       while True:
-        # Check for pending sub-queries
-        if memory.get("awaiting_next_issue"):
-            query = input("You: ").strip()
-            if query.lower() in ("yes", "y", "sure", "ok", "okay", "yeah"):
-                next_sq = memory["pending_queries"].pop(0)
-                memory["awaiting_next_issue"] = False
-                memory["current_agent"] = ""
-                query = next_sq["query"]
-                debug and print(f"  [Decomposer] Starting next issue: {query}")
-            else:
-                memory["awaiting_next_issue"] = False
-                memory["pending_queries"] = []
-        else:
-            query = input("You: ").strip()
+        ```
+            while True:
+                # Check for pending sub-queries
+                if memory.get("awaiting_next_issue"):
+                    query = input("You: ").strip()
+                    if query.lower() in ("yes", "y", "sure", "ok", "okay", "yeah"):
+                        next_sq = memory["pending_queries"].pop(0)
+                        memory["awaiting_next_issue"] = False
+                        memory["current_agent"] = ""
+                        query = next_sq["query"]
+                        debug and print(f"  [Decomposer] Starting next issue: {query}")
+                    else:
+                        memory["awaiting_next_issue"] = False
+                        memory["pending_queries"] = []
+                else:
+                    query = input("You: ").strip()
 
-            .
-            .
-            .
+                    .
+                    .
+                    .
 
-            # Decompose 
-            if not memory.get("current_agent"):
-                decomp = triage.decompose(query)
-                if decomp.get("complex") and len(decomp.get("sub_queries", [])) > 1:
-                    sub_queries = decomp["sub_queries"]
-                    if debug:
-                        print(f"  [Decomposer] Complex query — {len(sub_queries)} issues detected:")
-                        for sq in sub_queries:
-                            print(f"    - {sq['query']} (category: {sq['category']})")
+                    # Decompose 
+                    if not memory.get("current_agent"):
+                        decomp = triage.decompose(query)
+                        if decomp.get("complex") and len(decomp.get("sub_queries", [])) > 1:
+                            sub_queries = decomp["sub_queries"]
+                            if debug:
+                                print(f"  [Decomposer] Complex query — {len(sub_queries)} issues detected:")
+                                for sq in sub_queries:
+                                    print(f"    - {sq['query']} (category: {sq['category']})")
 
-                    memory["pending_queries"] = sub_queries[1:]
-                    query = sub_queries[0]["query"]
-                    memory["current_agent"] = ""
+                            memory["pending_queries"] = sub_queries[1:]
+                            query = sub_queries[0]["query"]
+                            memory["current_agent"] = ""
 
-        # Run workflow 
-        response, result = _process_query(query, name, history_str, debug, memory, workflow)
-        memory["current_agent"] = result.get("current_agent", "")
+                # Run workflow 
+                response, result = _process_query(query, name, history_str, debug, memory, workflow)
+                memory["current_agent"] = result.get("current_agent", "")
 
-        if memory["pending_queries"]:
-            next_issue = memory["pending_queries"][0]["query"]
-            response += f"\n\nI also noticed you mentioned another issue: \"{next_issue}\". Would you like me to help with that now?"
-            memory["awaiting_next_issue"] = True
-```
+                if memory["pending_queries"]:
+                    next_issue = memory["pending_queries"][0]["query"]
+                    response += f"\n\nI also noticed you mentioned another issue: \"{next_issue}\". Would you like me to help with that now?"
+                    memory["awaiting_next_issue"] = True
+        ```
 
 3. **Tool Integration: Connect to simulated backend systems (you'll provide mock APIs)**
    - At least 1 API connected - [x]
