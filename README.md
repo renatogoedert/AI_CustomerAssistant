@@ -328,15 +328,15 @@ flowchart TD
         .
         .
         .
-        def process(self, query: str, history: str = "", debug: bool = False) -> dict:
-            .
-            .
-            .
-                # HyDE
-                hypothesis = self._generate_hypothesis(query)
-                retrieved = self.retriever.retrieve(hypothesis)
-                compressed = self.compressor.compress(query, retrieved) if retrieved else []
-                rag_context = "\n\n".join([doc.page_content for doc in compressed]) if compressed else ""
+            def process(self, query: str, history: str = "", debug: bool = False) -> dict:
+                .
+                .
+                .
+                    # HyDE
+                    hypothesis = self._generate_hypothesis(query)
+                    retrieved = self.retriever.retrieve(hypothesis)
+                    compressed = self.compressor.compress(query, retrieved) if retrieved else []
+                    rag_context = "\n\n".join([doc.page_content for doc in compressed]) if compressed else ""
         ```
         - [General Agent](./agents/general/general_info_agent.py)
         ```
