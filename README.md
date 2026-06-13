@@ -196,7 +196,7 @@ flowchart TD
    - Execute multiple retrieval operations - [x]
    - Synthesise comprehensive response - [~]
 
-- [Triage Agent](./agents/triage/triage_agent.py)
+        - [Triage Agent](./agents/triage/triage_agent.py)
 ```
 class TriageAgent:
 
@@ -228,7 +228,7 @@ class TriageAgent:
         return {"complex": False, "sub_queries": []}
 ```
 
-- [Main](./main.py)
+        - [Main](./main.py)
 
 ```
        while True:
