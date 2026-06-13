@@ -284,8 +284,106 @@ flowchart TD
         - [Action Agent](./agents/action/action_agent.py)
 
 4. **Advanced Retrieval Strategies: Implement at least 2 advanced techniques**
-   - Query expansion/rewriting - []
-   - Hypothetical document embeddings (HyDE) - []
+   - Query expansion/rewriting - [x]
+        - [Rewriter tool](./agents/triage/tool_rewriter.py)
+        - [Triage Agent](./agents/triage/triage_agent.py)
+        ```
+        # Check rewrite_query
+        rewritten_query = None
+        for msg in result["messages"]:
+            if hasattr(msg, "type") and msg.type == "tool" and "rewritten" in str(msg.content):
+                match = re.search(r'\{.*\}', msg.content, re.DOTALL)
+                if match:
+                    parsed = json.loads(match.group())
+                    rewritten_query = parsed.get("rewritten")
+        ```
+
+   - Hypothetical document embeddings (HyDE) - [x]
+        - [Technical Agent](./agents/technical/technical_agent.py)
+        ```
+        class TechnicalAgent:
+        .
+        .
+        .
+            def _generate_hypothesis(self, query: str) -> str:
+
+                """
+                Generate a hypothetical document to improve RAG retrieval (HyDE technique).
+                Based on: Gao et al. (2023)
+                """
+                prompt = f"""
+                    You are generating a hypothetical document for Omnia Retail Ltd, an Irish electronics retailer.
+                    The knowledge base contains: policies, FAQs, and support tickets.
+                    
+                    Write a short hypothetical document (under 100 words) that would answer this query.
+                    Write it as a document excerpt, not as a response to a customer.
+                    It may contain inaccuracies — focus on using the right structure and vocabulary.
+                    
+                    Query: {query}
+                    
+                    Hypothetical document:
+                """
+                response = self.hyde_llm.invoke(prompt)
+                return response.content.strip()
+        .
+        .
+        .
+        def process(self, query: str, history: str = "", debug: bool = False) -> dict:
+            .
+            .
+            .
+                # HyDE
+                hypothesis = self._generate_hypothesis(query)
+                retrieved = self.retriever.retrieve(hypothesis)
+                compressed = self.compressor.compress(query, retrieved) if retrieved else []
+                rag_context = "\n\n".join([doc.page_content for doc in compressed]) if compressed else ""
+        ```
+        - [General Agent](./agents/general/general_info_agent.py)
+        ```
+        class GeneralAgent:
+        .
+        .
+        .
+            def _generate_hypothesis(self, query: str) -> str:
+
+                """
+                Generate a hypothetical document to improve RAG retrieval (HyDE technique).
+                Based on: Gao et al. (2023)
+                """
+                prompt = f"""
+                    You are generating a hypothetical document for Omnia Retail Ltd, an Irish electronics retailer.
+                    The knowledge base contains: policies, FAQs, and support tickets.
+                    
+                    Write a short hypothetical document (under 100 words) that would answer this query.
+                    Write it as a document excerpt, not as a response to a customer.
+                    It may contain inaccuracies — focus on using the right structure and vocabulary.
+                    
+                    Query: {query}
+                    
+                    Hypothetical document:
+                """
+                response = self.hyde_llm.invoke(prompt)
+                return response.content.strip()
+        .
+        .
+        .
+            def process(self, query: str, history: str = "", debug: bool = False) -> dict:
+            .
+            .
+            .
+                # RAG 
+                retrieved = self.retriever.retrieve(query)
+                top_score = float(retrieved[0].metadata.get("retrieval_score", 0)) if retrieved else 0.0
+        
+                # HyDE 
+                if not retrieved or top_score < 1.5:
+                    hypothesis = self._generate_hypothesis(query)
+                    debug and print(f"  [GeneralAgent] HyDE triggered (score={top_score:.2f}) → {hypothesis[:80]}...")
+                    hyde_retrieved = self.retriever.retrieve(hypothesis)
+                    if hyde_retrieved:
+                        retrieved = hyde_retrieved
+
+        ```
    - Parent-child document chunking - []
    - Temporal/metadata boosting - []
    - Students choose and justify their approaches - []
