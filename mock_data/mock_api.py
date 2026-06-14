@@ -1,12 +1,3 @@
-"""
-Mock backend API for Omnia Retail Ltd.
-Simulates REST API calls using a local JSON file as the database.
-
-APIs:
-    - check_order_status(order_id, username) - order details
-    - process_refund(order_id, username, reason) - refund confirmation
-    - check_inventory(product_name) - stock levels
-"""
 import json
 import uuid
 from datetime import datetime
@@ -16,25 +7,25 @@ DB_PATH = Path(__file__).parent / "omnia_backend.json"
 
 
 def _load_db() -> dict:
+
     """Load the mock database."""
+
     return json.loads(DB_PATH.read_text(encoding="utf-8"))
 
 
 def _save_db(db: dict):
+
     """Save the mock database."""
+    
     DB_PATH.write_text(json.dumps(db, indent=2, ensure_ascii=False), encoding="utf-8")
 
-
-# ── Order Status ─────────────────────────────────────────────
-
 def check_order_status(order_id: str, username: str) -> dict:
+
     """
     Check the status of an order.
-    Verifies the order belongs to the logged-in user.
-
-    Returns:
-        {"success": bool, "order": dict | None, "error": str | None}
+    Returns: {"success": bool, "order": dict | None, "error": str | None}
     """
+
     try:
         db = _load_db()
         order = db["orders"].get(order_id)
@@ -58,17 +49,13 @@ def check_order_status(order_id: str, username: str) -> dict:
     except Exception as e:
         return {"success": False, "order": None, "error": f"API error: {str(e)}"}
 
-
-# ── Refund Processor ─────────────────────────────────────────
-
 def process_refund(order_id: str, username: str, reason: str) -> dict:
+
     """
     Process a refund for an order.
-    Only allows refunds for delivered orders not already refunded.
-
-    Returns:
-        {"success": bool, "refund_id": str | None, "message": str, "error": str | None}
+    Returns: {"success": bool, "refund_id": str | None, "message": str, "error": str | None}
     """
+
     try:
         db = _load_db()
         order = db["orders"].get(order_id)
@@ -134,21 +121,17 @@ def process_refund(order_id: str, username: str, reason: str) -> dict:
         return {"success": False, "refund_id": None, "message": "", "error": f"API error: {str(e)}"}
 
 
-# ── Inventory Checker ─────────────────────────────────────────
-
 def check_inventory(product_name: str) -> dict:
+
     """
     Check inventory levels for a product.
-    Supports partial name matching.
-
-    Returns:
-        {"success": bool, "results": list, "error": str | None}
+    Returns: {"success": bool, "results": list, "error": str | None}
     """
     try:
         db = _load_db()
         inventory = db["inventory"]
 
-        # Exact match first
+        # Exact match 
         if product_name in inventory:
             item = inventory[product_name]
             return {
@@ -188,18 +171,3 @@ def check_inventory(product_name: str) -> dict:
     except Exception as e:
         return {"success": False, "results": [], "error": f"API error: {str(e)}"}
 
-
-# ── Quick test ────────────────────────────────────────────────
-
-if __name__ == "__main__":
-    print("=== Order Status ===")
-    print(check_order_status("ORD-2024-1891", "renato"))
-    print(check_order_status("ORD-2024-1891", "john"))  # wrong user
-
-    print("\n=== Inventory ===")
-    print(check_inventory("NVMe"))
-    print(check_inventory("Mouse"))
-
-    print("\n=== Refund ===")
-    print(process_refund("ORD-2024-3012", "renato", "Item arrived damaged"))
-    print(process_refund("ORD-2024-2045", "renato", "Changed mind"))  # not delivered

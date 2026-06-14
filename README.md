@@ -115,10 +115,12 @@ sequenceDiagram
     participant decomp as Triage.decompose()
     participant wf as LangGraph workflow
     participant triage as Triage node
-    participant agent as Specialist agent
+    participant returns as Returns node
+    participant action as Action node
     participant llm as OpenAI LLM
+    participant mcp as MCP server
 
-    User->>main: types query
+    User->>main: "I want a refund"
     main->>decomp: decompose(query)
     decomp->>llm: LLM call — detect complex query
     llm-->>decomp: {"complex": false}
@@ -126,19 +128,23 @@ sequenceDiagram
 
     main->>wf: workflow.invoke(state)
     wf->>triage: triage_node(state)
-    triage->>llm: LLM call — is_safe + rewrite? + classify
-    llm-->>triage: {"category": "technical", "route_to": "TechnicalAgent"}
+    triage->>llm: LLM call — is_safe + classify
+    llm-->>triage: {"category": "returns", "route_to": "ReturnsAgent"}
     triage-->>wf: updated state
 
-    wf->>agent: technical_node(state)
-    agent->>llm: LLM call — handoff needed?
-    llm-->>agent: no handoff
-    agent->>llm: LLM call — generate hypothesis (HyDE)
-    llm-->>agent: hypothetical document
-    agent->>agent: HybridRetriever.retrieve(hypothesis)
-    agent->>llm: LLM call — generate response
-    llm-->>agent: response
-    agent-->>wf: updated state
+    wf->>returns: returns_node(state)
+    returns->>llm: LLM call — executor (handoff / ready_for_action tools available)
+    llm-->>returns: ready_for_action(order_id="ORD-2024-5002", reason="item arrived damaged")
+    returns-->>wf: needs_handoff=True, route_to="ActionAgent", specialist_action={...}
+
+    wf->>action: action_node(state)
+    action->>llm: LLM call — executor (MCP tools available)
+    llm-->>action: submit_refund(order_id="ORD-2024-5002", username, reason)
+    action->>mcp: call_tool("submit_refund", {...})
+    mcp-->>action: {"refund_id": "REF-XXXX", "status": "approved"}
+    action->>llm: LLM call — generate response from tool result
+    llm-->>action: "Your refund has been processed..."
+    action-->>wf: updated state
 
     wf-->>main: result
     main->>main: log_interaction()

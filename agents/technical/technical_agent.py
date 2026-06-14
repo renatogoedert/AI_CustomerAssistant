@@ -136,9 +136,11 @@ class TechnicalAgent:
                 # "handoff_reason": "",
             }
 
-        # Run agent — checks if handoff is needed
+        # Run agent
+        full_query = f"Conversation so far:\n{history}\n\nCustomer: {query}" if history else query
+
         exec_result = self.executor.invoke({
-            "messages": [("human", query)]
+            "messages": [("human", full_query)]
         })
 
         # Debug tool calls

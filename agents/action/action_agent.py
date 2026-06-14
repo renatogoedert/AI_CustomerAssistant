@@ -155,17 +155,14 @@ class ActionAgent:
                 "handoff_reason": "",
             }
 
-        # Build query with username context
-        active_username = username or self.username
-        full_query = f"{query}\n\nNote: The logged-in customer username is '{active_username}'."
-        if history:
-            full_query = f"Conversation so far:\n{history}\n\nCustomer: {query}\nNote: username is '{active_username}'."
-
         # Run agent
-        exec_result = self.executor.invoke({
-            "messages": [("human", query)]
-        })
+        full_query = f"Conversation so far:\n{history}\n\nCustomer: {query}" if history else query
+        full_query = f"{full_query}\n\nNote: The logged-in customer username is '{username}'."
 
+        exec_result = self.executor.invoke({
+            "messages": [("human", full_query)]
+        })
+        
         # Debug tool calls
         if debug:
             for msg in exec_result["messages"]:

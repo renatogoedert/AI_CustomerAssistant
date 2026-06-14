@@ -110,11 +110,81 @@
       "role": "assistant",
       "content": "The key differences between NVMe SSD and SATA SSD are:\n\n- **Interface and Speed:**\n  - **NVMe SSD** uses the PCIe interface, offering much faster data transfer speeds. For example:\n    - Gen 3 NVMe: ~3,000–3,500 MB/s read speeds\n    - Gen 4 NVMe: ~5,000–7,000 MB/s read speeds\n    - Gen 5 NVMe: up to 12,000 MB/s (cutting edge as of 2024)\n  - **SATA SSD** uses the SATA III interface (same as older HDDs), with speeds around 500–550 MB/s.\n\n- **Performance:**\n  - NVMe SSDs provide significantly better performance and responsiveness, making them the preferred choice for primary drives in new purchases.\n  - SATA SSDs are a more affordable upgrade from HDDs but are slower compared to NVMe.\n\n- **Recommended Use:**\n  - Omnia Retail recommends choosing NVMe SSD as your primary drive for the best experience.\n  - SATA SSD or HDD can be used for secondary or external backup storage where cost per GB is more important than speed.\n\nIn summary, NVMe SSDs are much faster and better suited for demanding tasks, while SATA SSDs offer a budget-friendly upgrade over traditional hard drives.",
       "timestamp": "2026-06-12T21:55:53.311174"
+    },
+    {
+      "role": "user",
+      "content": "What are your opening hours?",
+      "timestamp": "2026-06-14T10:02:47.172891"
+    },
+    {
+      "role": "assistant",
+      "content": "Omnia Retail Warehouse is open Monday to Friday from 09:00 to 17:30.\n\nI also noticed you mentioned another issue: \"My mouse arrived damaged, I want a refund for order ORD-2024-5002\". Would you like me to help with that now?",
+      "timestamp": "2026-06-14T10:02:47.172897"
+    },
+    {
+      "role": "user",
+      "content": "My mouse arrived damaged, I want a refund for order ORD-2024-5002",
+      "timestamp": "2026-06-14T10:03:06.042166"
+    },
+    {
+      "role": "assistant",
+      "content": "Could you please provide your username so I can verify it matches the order before processing the refund?",
+      "timestamp": "2026-06-14T10:03:06.042172"
+    },
+    {
+      "role": "user",
+      "content": "admin",
+      "timestamp": "2026-06-14T10:03:34.689897"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm having trouble processing your request. Please contact our support team directly at support@omniaretail.ie or call 01-XXX-XXXX for immediate assistance.",
+      "timestamp": "2026-06-14T10:03:34.689903"
+    },
+    {
+      "role": "user",
+      "content": "What are your opening hours?",
+      "timestamp": "2026-06-14T10:08:43.002018"
+    },
+    {
+      "role": "assistant",
+      "content": "Omnia Retail Warehouse is open Monday to Friday from 09:00 to 17:30. If you need any further assistance, feel free to ask!\n\nI also noticed you mentioned another issue: \"My mouse arrived damaged, I want a refund\". Would you like me to help with that now?",
+      "timestamp": "2026-06-14T10:08:43.002027"
+    },
+    {
+      "role": "user",
+      "content": "My mouse arrived damaged, I want a refund",
+      "timestamp": "2026-06-14T10:08:55.716284"
+    },
+    {
+      "role": "assistant",
+      "content": "I can help you with that. Since your mouse arrived damaged, it is eligible for a return and refund.\n\nCould you please provide me with your order ID so I can proceed with the return process?",
+      "timestamp": "2026-06-14T10:08:55.716290"
+    },
+    {
+      "role": "user",
+      "content": "ORD-2024-5002",
+      "timestamp": "2026-06-14T10:09:06.902670"
+    },
+    {
+      "role": "assistant",
+      "content": "Thank you for providing the order ID ORD-2024-5002. Could you please specify the reason for your return or refund request? This will help me check the eligibility according to our returns policy.",
+      "timestamp": "2026-06-14T10:09:06.902678"
+    },
+    {
+      "role": "user",
+      "content": "mouse arrived damaged",
+      "timestamp": "2026-06-14T10:09:23.118183"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm sorry to hear that your mouse arrived damaged. This is eligible for a return with a refund.\n\nCould you please provide me with your order ID so I can proceed with the return process?",
+      "timestamp": "2026-06-14T10:09:23.118190"
     }
   ],
   "created_at": "2026-06-09T23:00:01.227066",
-  "last_seen": "2026-06-12T21:55:53.311175",
-  "current_agent": "GeneralAgent",
+  "last_seen": "2026-06-14T10:09:23.118192",
+  "current_agent": "ReturnsAgent",
   "pending_queries": [],
   "awaiting_next_issue": false
 }
