@@ -84,7 +84,7 @@ agentic-assistant/
 │   ├── workflow.py                  ← LangGraph StateGraph
 │   ├── tools/
 │   │   ├── safety.py                ← is_safe @tool
-│   │   └── handoff.py               ← handoff @tool + check_for_handoff
+│   │   └── handoff.py               ← handoff @tool
 │   ├── triage/
 │   │   ├── triage_agent.py          ← TriageAgent + decompose()
 │   │   ├── tool_classifier.py       ← classify_query @tool
