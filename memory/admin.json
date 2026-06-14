@@ -3,188 +3,58 @@
   "history": [
     {
       "role": "user",
-      "content": "apple sansung",
-      "timestamp": "2026-06-12T14:56:10.437320"
-    },
-    {
-      "role": "assistant",
-      "content": "Hello! It looks like you mentioned \"apple sansung.\" Could you please clarify your question or let me know how I can assist you with Apple or Samsung products?",
-      "timestamp": "2026-06-12T14:56:10.437328"
-    },
-    {
-      "role": "user",
-      "content": "apple sansung",
-      "timestamp": "2026-06-12T14:58:27.853597"
-    },
-    {
-      "role": "assistant",
-      "content": "Certainly! Here's an overview comparing Apple and Samsung smartphones based on features, specifications, and differences:\n\n**1. Operating System:**\n- Apple iPhones run iOS, known for its smooth integration, security, and consistent updates.\n- Samsung smartphones run Android (with Samsung’s One UI skin), offering more customization and flexibility.\n\n**2. Performance:**\n- Apple uses its own A-series or M-series chips (e.g., A16 Bionic), which are highly optimized for iOS and deliver excellent performance and efficiency.\n- Samsung uses Qualcomm Snapdragon or its own Exynos processors depending on the region, which offer strong performance but generally lag slightly behind Apple’s chips in raw benchmarks.\n\n**3. Ecosystem Integration:**\n- Apple devices work seamlessly together (iPhone, iPad, Mac, Apple Watch) with features like Handoff, AirDrop, Universal Clipboard, and iMessage.\n- Samsung integrates well with other Samsung devices (Galaxy tablets, watches, earbuds) and supports Android ecosystem features like Google services and Microsoft integration.\n\n**4. Display:**\n- Samsung is known for its vibrant AMOLED displays with high refresh rates (up to 120Hz or more), often offering higher resolution and more vivid colors.\n- Apple uses Super Retina OLED displays with excellent color accuracy and True Tone technology but typically capped at 60Hz or 120Hz on Pro models.\n\n**5. Camera:**\n- Both brands offer advanced camera systems. Apple focuses on natural color reproduction and video capabilities (e.g., Cinematic mode).\n- Samsung often includes more versatile hardware (periscope zoom, higher megapixels) and extensive camera modes.\n\n**6. Battery Life and Charging:**\n- Samsung phones often have larger batteries and support faster wired and wireless charging.\n- Apple focuses on battery optimization through hardware-software integration, with decent battery life and MagSafe wireless charging.\n\n**7. Hardware Flexibility:**\n- Samsung offers a wider range of models with various sizes, foldable designs, expandable storage (microSD on some models), and headphone jacks on some devices.\n- Apple offers fewer models but emphasizes premium build quality and uniform design.\n\n**8. Software Updates:**\n- Apple provides longer and more consistent software updates (typically 5+ years).\n- Samsung has improved significantly, offering up to 4 years of major Android updates on many devices.\n\nIf you have specific models in mind or particular features you want to compare, please let me know!",
-      "timestamp": "2026-06-12T14:58:27.853629"
-    },
-    {
-      "role": "user",
-      "content": "apple sangung",
-      "timestamp": "2026-06-12T15:15:22.965158"
-    },
-    {
-      "role": "assistant",
-      "content": "Certainly! Here's a detailed comparison of Apple and Samsung electronic devices focusing on product information, specifications, and features across their main categories:\n\n---\n\n### 1. **Smartphones**\n\n| Feature                 | Apple iPhone                              | Samsung Galaxy Phones                      |\n|-------------------------|------------------------------------------|--------------------------------------------|\n| **Operating System**    | iOS — smooth, secure, consistent updates | Android with One UI — customizable, flexible |\n| **Processor**           | Apple A-series chips (e.g., A16 Bionic) — highly optimized | Qualcomm Snapdragon or Exynos — strong performance |\n| **Display**             | Super Retina OLED, excellent color accuracy, up to 120Hz (Pro models) | AMOLED, vibrant colors, high refresh rates (up to 120Hz or more) |\n| **Camera**              | Natural color reproduction, advanced video features (Cinematic mode) | Versatile hardware, high megapixels, multiple camera modes |\n| **Battery & Charging**  | Optimized battery life, MagSafe wireless charging | Larger batteries, faster wired & wireless charging |\n| **Hardware Flexibility**| Limited models, premium build quality | Wide range including foldables, expandable storage on some models |\n| **Software Updates**    | 5+ years of updates                       | Up to 4 years of major Android updates    |\n\n---\n\n### 2. **Laptops and Tablets**\n\n| Feature                 | Apple (MacBooks, iPads)                   | Samsung (Galaxy Tab, Windows laptops)     |\n|-------------------------|------------------------------------------|--------------------------------------------|\n| **Processor**           | Apple M-series chips (M1, M2, M3) — exceptional performance, energy efficient | Intel/AMD processors in laptops, Exynos or Snapdragon in tablets |\n| **Operating System**    | macOS for MacBooks, iPadOS for iPads     | Windows for laptops, Android for tablets   |\n| **Performance for Creative Work** | Highly optimized for video editing (Final Cut Pro), music (Logic Pro), photography; Adobe Creative Cloud runs excellently | Good performance but less optimized for Mac-only creative apps |\n| **Battery Life**        | MacBook Air M3 offers 15–18 hours real-world battery life | Varies widely; generally less than MacBook Air in similar form factor |\n| **Hardware Flexibility**| Limited configurations, no user upgrades | Wide variety of configurations, upgradeable RAM/SSD in many laptops |\n| **Ecosystem Integration** | Seamless with iPhone, iPad, AirPods (Handoff, AirDrop, iMessage) | Integrates well with Samsung devices and Google/Microsoft services |\n\n---\n\n### 3. **Accessories and Ecosystem**\n\n| Feature                 | Apple                                    | Samsung                                    |\n|-------------------------|------------------------------------------|--------------------------------------------|\n| **Ecosystem**           | Tight integration across devices (Mac, iPhone, iPad, Apple Watch, AirPods) | Strong integration with Galaxy devices, SmartThings ecosystem |\n| **Connectivity**        | MagSafe charging, AirDrop, Handoff       | Wireless PowerShare, Samsung DeX, SmartThings |\n| **Ports and Expansion** | Limited ports, mostly USB-C/Thunderbolt  | More port variety, including USB-C, microSD support on some devices |\n\n---\n\n### Summary\n\n- **Choose Apple if:** You want seamless ecosystem integration, long software support, excellent creative app performance, and outstanding battery life in laptops.\n- **Choose Samsung if:** You prefer hardware flexibility, a wider range of device options (including foldables), expandable storage, and vibrant AMOLED displays.\n\n---\n\nIf you have specific Apple or Samsung products in mind or want a comparison for a particular device category, please let me know!",
-      "timestamp": "2026-06-12T15:15:22.965167"
-    },
-    {
-      "role": "user",
-      "content": "Is the Apple MacBook Pro M3 in stock?",
-      "timestamp": "2026-06-12T15:18:54.243721"
-    },
-    {
-      "role": "assistant",
-      "content": "I'm currently unable to check the inventory for the Apple MacBook Pro M3 due to a system connection issue. Please contact support@omniaretail.ie for assistance with product availability. Is there anything else I can help you with?",
-      "timestamp": "2026-06-12T15:18:54.243738"
-    },
-    {
-      "role": "user",
       "content": "What are your opening hours?",
-      "timestamp": "2026-06-12T21:47:48.947895"
-    },
-    {
-      "role": "assistant",
-      "content": "Our warehouse at Park West Business Campus, Dublin 12, is open Monday to Friday from 09:00 to 17:30. If you need any further assistance, feel free to ask!",
-      "timestamp": "2026-06-12T21:47:48.947907"
-    },
-    {
-      "role": "user",
-      "content": "My laptop keeps shutting down unexpectedly. What should I do?\"",
-      "timestamp": "2026-06-12T21:51:34.063209"
-    },
-    {
-      "role": "assistant",
-      "content": "I'm sorry to hear your laptop is shutting down unexpectedly. Let's work through some steps to identify and resolve the issue:\n\n1. **Check the Environment:**\n   - Make sure you are using your laptop on a hard, flat surface (like a desk or table). Soft surfaces like sofas or cushions can block ventilation vents and cause overheating.\n\n2. **Review Event Viewer Logs:**\n   - If possible, open Windows Event Viewer:\n     - Press `Windows key + R`, type `eventvwr.msc`, and press Enter.\n     - Navigate to **Windows Logs > System**.\n     - Look for critical events with Event ID 41 (Kernel-Power) around the time your laptop shuts down. This indicates an unexpected shutdown often caused by power or thermal issues.\n\n3. **Run HP Support Assistant Diagnostics (if applicable):**\n   - Open HP Support Assistant and run the thermal and battery tests.\n   - If the thermal test shows CPU throttling or overheating, this confirms the laptop is shutting down to protect itself.\n\n4. **Enable HP Fan Always On Feature:**\n   - Restart your laptop and enter BIOS/UEFI settings (usually by pressing `Esc`, `F2`, or `F10` during startup).\n   - Look for a setting called **HP Fan Always On** and enable it to improve cooling.\n\n5. **Use a Laptop Stand with Passive Cooling:**\n   - Consider using a laptop stand that improves airflow, such as the Nexstand K2 (available for €35 at Omnia Retail).\n\n6. **Additional Tips:**\n   - Avoid blocking the laptop’s air vents.\n   - Keep the laptop clean and free of dust.\n   - Avoid running heavy applications simultaneously if possible.\n\nIf after these steps your laptop still shuts down unexpectedly, please provide your laptop model and any error messages or symptoms you notice, and we can assist further.",
-      "timestamp": "2026-06-12T21:51:34.063215"
-    },
-    {
-      "role": "user",
-      "content": "How much RAM do I need for video editing?",
-      "timestamp": "2026-06-12T21:52:05.962309"
-    },
-    {
-      "role": "assistant",
-      "content": "For video editing, the amount of RAM you need depends on the complexity and resolution of your projects:\n\n- **16GB RAM**: Suitable for light to moderate video editing, such as editing HD or 1080p footage, and working with Adobe Premiere Pro or DaVinci Resolve on smaller projects. This is the minimum recommended for comfortable editing.\n\n- **32GB RAM**: Recommended if you work with 4K footage, use multiple video and audio tracks, apply complex effects, or run other demanding applications alongside your editing software. This amount helps ensure smooth playback and faster rendering.\n\n- **64GB or more**: Needed for professional video production involving high-resolution 4K/8K multicam editing, advanced effects, and heavy multitasking like running multiple virtual machines or machine learning tasks alongside editing.\n\n**Summary:**\n\n- For hobbyist or occasional video editing: **16GB** is usually enough.\n- For serious or professional 4K editing: **32GB** is ideal.\n- For very high-end, specialist workflows: **64GB+** may be required.\n\nIf you let me know your typical video editing workload and software, I can help you choose the best RAM configuration!",
-      "timestamp": "2026-06-12T21:52:05.962315"
-    },
-    {
-      "role": "user",
-      "content": "What is Omnia Retail's return policy for a product I changed my mind about?",
-      "timestamp": "2026-06-12T21:52:35.210202"
-    },
-    {
-      "role": "assistant",
-      "content": "Omnia Retail's return policy for a product you changed your mind about is as follows:\n\n- You can return the product within 30 days from the delivery date.\n- The product should be either unopened in its original packaging with all accessories or opened but showing no signs of use (only tested).\n- You are responsible for the return shipping cost if the return is due to a change of mind.\n- There is no restocking fee for unopened items.\n- For opened laptops or computers returned for non-defect reasons, a 10% restocking fee applies.\n\nIf you want to proceed with a return for a change of mind, please provide your order ID and purchase date to check eligibility.",
-      "timestamp": "2026-06-12T21:52:35.210208"
-    },
-    {
-      "role": "user",
-      "content": "What are my warranty rights if a product develops a fault after 10 months?\"",
-      "timestamp": "2026-06-12T21:53:30.925571"
-    },
-    {
-      "role": "assistant",
-      "content": "Regarding warranty rights for a product that develops a fault after 10 months, Omnia Retail Ltd's returns policy primarily covers returns and refunds within 30 days from delivery for defects. However, warranty rights beyond this period are generally governed by the manufacturer's warranty and consumer protection laws in Ireland.\n\nIf your product develops a fault after 10 months, you should:\n\n1. Check the manufacturer's warranty terms, which often cover defects for at least one year.\n2. Contact the manufacturer directly for repair, replacement, or service under warranty.\n3. If the product was purchased in Ireland, consumer protection laws may provide additional rights for faulty goods beyond the retailer's return period.\n\nOmnia Retail Ltd can assist with returns and refunds within the 30-day window for defects but does not handle warranty claims beyond that period directly.\n\nIf you want, I can help you with the return process if the fault was discovered within 30 days or guide you on how to contact the manufacturer. Would you like assistance with that?",
-      "timestamp": "2026-06-12T21:53:30.925579"
-    },
-    {
-      "role": "user",
-      "content": "I want to buy monitors in bulk for my office. Do you offer business pricing?",
-      "timestamp": "2026-06-12T21:54:59.256531"
-    },
-    {
-      "role": "assistant",
-      "content": "I couldn't find relevant information for your query in our documentation. Please contact our support team directly at support@omniaretail.ie or call 01-XXX-XXXX.",
-      "timestamp": "2026-06-12T21:54:59.256536"
-    },
-    {
-      "role": "user",
-      "content": "What is the difference between NVMe and SATA SSD?",
-      "timestamp": "2026-06-12T21:55:53.311166"
-    },
-    {
-      "role": "assistant",
-      "content": "The key differences between NVMe SSD and SATA SSD are:\n\n- **Interface and Speed:**\n  - **NVMe SSD** uses the PCIe interface, offering much faster data transfer speeds. For example:\n    - Gen 3 NVMe: ~3,000–3,500 MB/s read speeds\n    - Gen 4 NVMe: ~5,000–7,000 MB/s read speeds\n    - Gen 5 NVMe: up to 12,000 MB/s (cutting edge as of 2024)\n  - **SATA SSD** uses the SATA III interface (same as older HDDs), with speeds around 500–550 MB/s.\n\n- **Performance:**\n  - NVMe SSDs provide significantly better performance and responsiveness, making them the preferred choice for primary drives in new purchases.\n  - SATA SSDs are a more affordable upgrade from HDDs but are slower compared to NVMe.\n\n- **Recommended Use:**\n  - Omnia Retail recommends choosing NVMe SSD as your primary drive for the best experience.\n  - SATA SSD or HDD can be used for secondary or external backup storage where cost per GB is more important than speed.\n\nIn summary, NVMe SSDs are much faster and better suited for demanding tasks, while SATA SSDs offer a budget-friendly upgrade over traditional hard drives.",
-      "timestamp": "2026-06-12T21:55:53.311174"
-    },
-    {
-      "role": "user",
-      "content": "What are your opening hours?",
-      "timestamp": "2026-06-14T10:02:47.172891"
-    },
-    {
-      "role": "assistant",
-      "content": "Omnia Retail Warehouse is open Monday to Friday from 09:00 to 17:30.\n\nI also noticed you mentioned another issue: \"My mouse arrived damaged, I want a refund for order ORD-2024-5002\". Would you like me to help with that now?",
-      "timestamp": "2026-06-14T10:02:47.172897"
-    },
-    {
-      "role": "user",
-      "content": "My mouse arrived damaged, I want a refund for order ORD-2024-5002",
-      "timestamp": "2026-06-14T10:03:06.042166"
-    },
-    {
-      "role": "assistant",
-      "content": "Could you please provide your username so I can verify it matches the order before processing the refund?",
-      "timestamp": "2026-06-14T10:03:06.042172"
-    },
-    {
-      "role": "user",
-      "content": "admin",
-      "timestamp": "2026-06-14T10:03:34.689897"
-    },
-    {
-      "role": "assistant",
-      "content": "I'm having trouble processing your request. Please contact our support team directly at support@omniaretail.ie or call 01-XXX-XXXX for immediate assistance.",
-      "timestamp": "2026-06-14T10:03:34.689903"
-    },
-    {
-      "role": "user",
-      "content": "What are your opening hours?",
-      "timestamp": "2026-06-14T10:08:43.002018"
+      "timestamp": "2026-06-14T10:27:39.056481"
     },
     {
       "role": "assistant",
       "content": "Omnia Retail Warehouse is open Monday to Friday from 09:00 to 17:30. If you need any further assistance, feel free to ask!\n\nI also noticed you mentioned another issue: \"My mouse arrived damaged, I want a refund\". Would you like me to help with that now?",
-      "timestamp": "2026-06-14T10:08:43.002027"
+      "timestamp": "2026-06-14T10:27:39.056489"
     },
     {
       "role": "user",
       "content": "My mouse arrived damaged, I want a refund",
-      "timestamp": "2026-06-14T10:08:55.716284"
+      "timestamp": "2026-06-14T10:27:49.527869"
     },
     {
       "role": "assistant",
-      "content": "I can help you with that. Since your mouse arrived damaged, it is eligible for a return and refund.\n\nCould you please provide me with your order ID so I can proceed with the return process?",
-      "timestamp": "2026-06-14T10:08:55.716290"
+      "content": "Thank you for letting us know about the damaged mouse. To assist you with the return and refund process, could you please provide your order ID and the date you received the item? This will help us verify your purchase and proceed accordingly.",
+      "timestamp": "2026-06-14T10:27:49.527877"
     },
     {
       "role": "user",
       "content": "ORD-2024-5002",
-      "timestamp": "2026-06-14T10:09:06.902670"
+      "timestamp": "2026-06-14T10:28:07.523760"
     },
     {
       "role": "assistant",
-      "content": "Thank you for providing the order ID ORD-2024-5002. Could you please specify the reason for your return or refund request? This will help me check the eligibility according to our returns policy.",
-      "timestamp": "2026-06-14T10:09:06.902678"
+      "content": "Your order ORD-2024-5002 for the Logitech MX Master 3S Mouse was delivered on 2024-05-16, and I see that the refund for the damaged item has already been approved. If you need any further assistance or have other questions, please let me know!",
+      "timestamp": "2026-06-14T10:28:07.523767"
     },
     {
       "role": "user",
-      "content": "mouse arrived damaged",
-      "timestamp": "2026-06-14T10:09:23.118183"
+      "content": "sunsung apple",
+      "timestamp": "2026-06-14T10:28:43.035116"
     },
     {
       "role": "assistant",
-      "content": "I'm sorry to hear that your mouse arrived damaged. This is eligible for a return with a refund.\n\nCould you please provide me with your order ID so I can proceed with the return process?",
-      "timestamp": "2026-06-14T10:09:23.118190"
+      "content": "I'm having trouble processing your request. Please contact our support team directly at support@omniaretail.ie or call 01-XXX-XXXX for immediate assistance.",
+      "timestamp": "2026-06-14T10:28:43.035123"
+    },
+    {
+      "role": "user",
+      "content": "diffenrece between hhd ssd",
+      "timestamp": "2026-06-14T10:31:11.555174"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "timestamp": "2026-06-14T10:31:11.555180"
     }
   ],
   "created_at": "2026-06-09T23:00:01.227066",
-  "last_seen": "2026-06-14T10:09:23.118192",
-  "current_agent": "ReturnsAgent",
+  "last_seen": "2026-06-14T10:31:11.555182",
+  "current_agent": "EscalationAgent",
   "pending_queries": [],
   "awaiting_next_issue": false
 }

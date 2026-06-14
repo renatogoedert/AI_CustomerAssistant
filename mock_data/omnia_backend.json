@@ -106,7 +106,7 @@
         }
       ],
       "total": 89.99,
-      "refund_status": null
+      "refund_status": "approved"
     },
     "ORD-2024-5003": {
       "order_id": "ORD-2024-5003",
@@ -186,6 +186,15 @@
       "amount": 89.99,
       "status": "approved",
       "date": "2026-06-08T15:59:21.014327"
+    },
+    "REF-94D98BEC": {
+      "refund_id": "REF-94D98BEC",
+      "order_id": "ORD-2024-5002",
+      "username": "admin",
+      "reason": "mouse arrived damaged",
+      "amount": 89.99,
+      "status": "approved",
+      "date": "2026-06-14T10:21:51.429858"
     }
   }
 }
