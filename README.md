@@ -386,10 +386,75 @@ flowchart TD
         ```
 
     - Parent-child document chunking - []
-    - Temporal/metadata boosting - []
-    - Students choose and justify their approaches - []
+    - Temporal/metadata boosting - [x]
 
+        - [Main](./main.py)
+        ```
+        def build_history(memory: dict, query: str, max_messages: int = 10) -> str:
+    
+        """
+        Build conversation history string using BM25 relevance + recency boosting.
+        """
+    
+        history = memory.get("history", [])
+        if not history:
+            return ""
+    
+        recent = history[-20:]
+        if not recent:
+            return ""
+    
+        # BM25 scoring 
+        tokenized = [_tokenize(msg["content"]) for msg in recent]
+        bm25 = BM25Okapi(tokenized)
+        bm25_scores = bm25.get_scores(_tokenize(query))
+    
+        # Temporal boost
+        n = len(recent)
+        scored = []
+        for i, (msg, bm25_score) in enumerate(zip(recent, bm25_scores)):
+            recency = (i + 1) / n
+            combined = float(bm25_score) + recency
+            scored.append((combined, i, msg))
+    
+        # Select top messages
+        scored.sort(key=lambda x: x[0], reverse=True)
+        selected = sorted(scored[:max_messages], key=lambda x: x[1])
+    
+        return "\n".join(
+            f"{'Customer' if m['role'] == 'user' else 'Assistant'}: {m['content']}"
+            for _, _, m in selected
+        )
+        ```
+    - Students choose and justify their approaches - [x]
 
-Hyde is a technique to improve Rag retrieval results, so because of that was added in both Technichal and general agent. However,when tested the results we not favorable, maybe for the fact that the rag was contructed in a way to favor the right results, so for the general agent hyde would be just used if the top score falls bellow a certain thresehold, on the technical agent, it already have Web search sup[lement, so for that Hyde would be the normal run, as it base parameters already should contain heigh level of technichal knowledge
+        - Query Expansion / Rewriting
 
-]
+        The Triage agent uses a `rewrite_query` tool to expand vague, short, or ambiguous customer queries before classification and retrieval. This tool is called by the LLM whenever the query is under 5 words, uses slang or abbreviations or is too ambiguous.
+
+        Examples:
+
+        ```
+        "screen issue" - "laptop monitor screen display not working blank flickering troubleshooting"
+        "apple sansung" - "Apple Samsung smartphone comparison features specifications differences"
+        ```
+
+        The rewritten query replaces the original one in the LangGraph state (`state["query"]`), than passes to the next agent in the pipeline, which operates on the expanded query. This is also used as a fallback, if Triage cannot confidently classify a query at all, it calls rewrite_query and re-classifies the expanded version, reducing misrouted queries caused by overly terse input.
+
+        - Hypothetical Document Embeddings (HyDE)
+
+        HyDE is a technique for improving RAG retrieval by generating an hypothetical answer to the query before embedding it for search, rather than embedding the raw query directly (Gao et al., 2023). This was added to both the General and Technical agents, as they were the only ones using RAG.
+
+        During testing, results were not always favourable, likely because the underlying RAG pipeline (Assignment 1) was already fine-tuned to retrieve good results for direct queries, so HyDE's reformulation sometimes moved the embedding away from a strong match rather than towards one.
+
+        To address this, HyDE is applied differently in each agent:
+
+            - General Agent — HyDE is only triggered when the top retrieval score falls below a confidence threshold (1.5). For well-matched queries, direct retrieval is used as-is, avoiding the extra LLM call and the risk of degrading a good result.
+        
+            - Technical Agent — HyDE runs on every low-confidence query alongside the existing web search fallback. Since the LLM's base parameters already encode substantial technical knowledge, the hypothetical document it generates tends to be technically grounded even without retrieval context, making it a reasonable complement to web search.
+
+        - Temporal/Metadata Boosting
+
+        This technique was originally implemented in Assignment 1 `HybridRetriever`, which boosts document retrieval scores based on recency, customer satisfaction, and product category metadata. Since reusing that code for the knowledge base retrieval would not represent new work for Assignment 2, the same boosting principle was instead applied to conversation memory.
+
+        `build_history()` selects which past messages to include as context for the current query, using a combination of BM25 keyword relevance (same tokenizer as `HybridRetriever`) and a recency score. This ensures agents receive the most contextually relevant prior exchanges rather than simply the most recent ones, applying the metadata/temporal boosting pattern to a new part of the system.
