@@ -1,18 +1,3 @@
-# building-ai-assignment-02-starter
-
-* TODO: Check of completed boxes with an x like this - [x]
-* TODO: Clone this repo - [x]
-* TODO: Change Title in Readme - []
-* TODO: Fill out the information below - []
-
-Name: Please Enter Name
-
-Student Number: Please Enter Student Number
-
-Github Repo URL:  Please provide the github repo URL for THIS repo as sometimes github usernames can get mixed up and you will be zipping this directory to go up to moodle. 
-
-----
-
 # Getting Started
 
 Prerequisites:
